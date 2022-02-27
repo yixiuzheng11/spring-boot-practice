@@ -1,6 +1,6 @@
 package org.yixz.common.config;
 
-/*import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
-import org.springframework.data.redis.serializer.RedisSerializer;*/
+import org.springframework.data.redis.serializer.RedisSerializer;
 
 /**
  * 描述
@@ -19,9 +19,9 @@ import org.springframework.data.redis.serializer.RedisSerializer;*/
  * @author YIXIUZHENG741
  * @date 2022年01月07日 16:14
  */
-//@Configuration
+@Configuration
 public class RedisConfig {
-    /*@Bean
+    @Bean
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
         //日期格式
         ObjectMapper om = new ObjectMapper();
@@ -42,6 +42,6 @@ public class RedisConfig {
         redisTemplate.setHashKeySerializer(RedisSerializer.string());
         redisTemplate.setHashValueSerializer(jackson2JsonRedisSerializer);
         return redisTemplate;
-    }*/
+    }
 
 }

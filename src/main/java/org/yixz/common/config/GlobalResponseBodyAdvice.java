@@ -33,6 +33,13 @@ public class GlobalResponseBodyAdvice implements ResponseBodyAdvice<Object> {
 
     @Override
     public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
+        if(body==null) {
+            Map<String, Object> map = new HashMap<>();
+            map.put("code", ResponseCode.SUCCESS.code);
+            map.put("msg", ResponseCode.SUCCESS.msg);
+            map.put("data", new HashMap<>());
+            return JSON.toJSONString(map);
+        }
         // 防止重复包裹的问题出现
         if (body instanceof ResponseResult) {
             return body;
