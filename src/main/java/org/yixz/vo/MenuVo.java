@@ -2,6 +2,9 @@ package org.yixz.vo;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+
+import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -11,7 +14,10 @@ import java.util.List;
  * @date 2021年12月23日 9:45
  */
 @Data
-public class MenuVo {
+public class MenuVo implements Serializable {
+
+    private static final long serialVersionUID = 865741444101738072L;
+
     @ApiModelProperty(value = "菜单id")
     private Integer id;
 
@@ -38,4 +44,6 @@ public class MenuVo {
 
     @ApiModelProperty(value = "按钮权限")
     private List<MenuVo> permList;
+
+    private Date createdDate;
 }

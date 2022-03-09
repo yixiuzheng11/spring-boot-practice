@@ -34,11 +34,7 @@ public class GlobalResponseBodyAdvice implements ResponseBodyAdvice<Object> {
     @Override
     public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
         if(body==null) {
-            Map<String, Object> map = new HashMap<>();
-            map.put("code", ResponseCode.SUCCESS.code);
-            map.put("msg", ResponseCode.SUCCESS.msg);
-            map.put("data", new HashMap<>());
-            return JSON.toJSONString(map);
+            return ResponseResult.success();
         }
         // 防止重复包裹的问题出现
         if (body instanceof ResponseResult) {
@@ -49,7 +45,7 @@ public class GlobalResponseBodyAdvice implements ResponseBodyAdvice<Object> {
             map.put("code", ResponseCode.SUCCESS.code);
             map.put("msg", ResponseCode.SUCCESS.msg);
             map.put("data", body);
-            return JSON.toJSONString(map);
+            return JSON.toJSONString(ResponseResult.success());
         }
         return ResponseResult.success(body);
     }

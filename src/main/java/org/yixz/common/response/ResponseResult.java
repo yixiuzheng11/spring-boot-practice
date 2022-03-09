@@ -27,6 +27,10 @@ public class ResponseResult implements Serializable {
      */
     private Object data = null;
 
+    public static ResponseResult success() {
+        return ResponseResult.builder().code(ResponseCode.SUCCESS.code).msg(ResponseCode.SUCCESS.msg).build();
+    }
+
     public static ResponseResult success(Object data) {
         return ResponseResult.builder().code(ResponseCode.SUCCESS.code).msg(ResponseCode.SUCCESS.msg).data(data).build();
     }
