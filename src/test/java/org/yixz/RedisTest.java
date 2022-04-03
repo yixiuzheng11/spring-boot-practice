@@ -7,7 +7,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.yixz.service.RedisOptService;
 import org.yixz.vo.MenuVo;
-
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;

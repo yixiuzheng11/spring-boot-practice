@@ -45,7 +45,7 @@ public class GlobalResponseBodyAdvice implements ResponseBodyAdvice<Object> {
             map.put("code", ResponseCode.SUCCESS.code);
             map.put("msg", ResponseCode.SUCCESS.msg);
             map.put("data", body);
-            return JSON.toJSONString(ResponseResult.success());
+            return JSON.toJSONString(map);
         }
         return ResponseResult.success(body);
     }
