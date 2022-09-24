@@ -7,7 +7,6 @@
         <id column="id" property="id" />
         <result column="user_id" property="userId" />
         <result column="role_id" property="roleId" />
-        <result column="void_flag" property="voidFlag" />
         <result column="created_date" property="createdDate" />
         <result column="updated_date" property="updatedDate" />
         <result column="created_by" property="createdBy" />
@@ -16,7 +15,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, user_id, role_id, void_flag, created_date, updated_date, created_by, updated_by
+        id, user_id, role_id, created_date, updated_date, created_by, updated_by
     </sql>
 
 </mapper>

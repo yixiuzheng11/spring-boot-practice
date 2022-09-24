@@ -8,7 +8,6 @@
         <result column="user_name" property="userName" />
         <result column="full_name" property="fullName" />
         <result column="password" property="password" />
-        <result column="void_flag" property="voidFlag" />
         <result column="created_date" property="createdDate" />
         <result column="updated_date" property="updatedDate" />
         <result column="created_by" property="createdBy" />
@@ -17,35 +16,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, user_name, full_name, password, void_flag, created_date, updated_date, created_by, updated_by
+        id, user_name, full_name, password, created_date, updated_date, created_by, updated_by
     </sql>
 
-    <!-- 用户角色权限查询映射结果 -->
-    <resultMap id="UserPermResultMap" type="org.yixz.vo.UserRolePermVo">
-        <id column="id" property="userId" />
-        <result column="user_name" property="userName" />
-        <result column="password" property="password" />
-        <result column="role_code" property="roleCode" />
-        <result column="perm" property="perm" />
-    </resultMap>
-
-    <select id="getUserPermByUserName" resultMap="UserPermResultMap">
-        SELECT
-        user.id,
-        user.user_name,
-        user.password,
-        role.role_code,
-        menu.perm
-        FROM
-        t_user user left join t_user_role userRole on user.id=userRole.user_id
-        left join t_role role on role.id=userRole.role_id
-        left join t_role_menu roleMenu on role.id=roleMenu.role_id
-        left join t_menu menu on menu.id=roleMenu.menu_id
-        <if test="menuType!=null">
-            and menu.type=#{menuType}
-        </if>
-        <where>
-            AND user.user_name=#{userName}
-        </where>
-    </select>
 </mapper>

@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
+import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -17,15 +18,16 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author yixz
- * @since 2021-12-22
+ * @since 2022-09-24
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("t_user_role")
-public class UserRole extends Model<UserRole> {
+public class UserRole {
+
     /**
-     * 主键id
+     * 主键
      */
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
@@ -39,11 +41,6 @@ public class UserRole extends Model<UserRole> {
      * 角色id
      */
     private Integer roleId;
-
-    /**
-     * 逻辑状态
-     */
-    private Integer voidFlag;
 
     /**
      * 创建时间

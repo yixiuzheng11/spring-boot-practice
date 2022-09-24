@@ -5,10 +5,12 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="org.yixz.entity.Menu">
         <id column="id" property="id" />
-        <result column="pid" property="pid" />
-        <result column="name" property="name" />
+        <result column="menu_name" property="menuName" />
+        <result column="menu_code" property="menuCode" />
+        <result column="icon" property="icon" />
+        <result column="parent_id" property="parentId" />
         <result column="url" property="url" />
-        <result column="perm" property="perm" />
+        <result column="perms" property="perms" />
         <result column="type" property="type" />
         <result column="sort" property="sort" />
         <result column="created_date" property="createdDate" />
@@ -19,34 +21,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, pid, name, url, perm, type, sort, created_date, updated_date, created_by, updated_by
+        id, menu_name, menu_code, icon, parent_id, url, perms, type, sort, created_date, updated_date, created_by, updated_by
     </sql>
 
-    <!-- 通用查询映射结果 -->
-    <resultMap id="MenuVoMap" type="org.yixz.vo.MenuVo">
-        <id column="id" property="id" />
-        <result column="pid" property="pid" />
-        <result column="name" property="name" />
-        <result column="url" property="url" />
-        <result column="perm" property="perm" />
-        <result column="type" property="type" />
-        <result column="sort" property="sort" />
-    </resultMap>
-
-    <select id="getMyMenu" resultMap="MenuVoMap">
-        SELECT
-        menu.id,
-        menu.name,
-        menu.pid,
-        menu.url,
-        menu.perm,
-        menu.type,
-        menu.sort
-        FROM
-        t_user_role userRole inner join t_role_menu roleMenu on userRole.role_id=roleMenu.role_id
-        inner join t_menu menu on roleMenu.menu_id=menu.id
-        <where>
-            AND userRole.user_id=#{userId}
-        </where>
-    </select>
 </mapper>

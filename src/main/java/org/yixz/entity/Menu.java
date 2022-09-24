@@ -1,49 +1,69 @@
 package org.yixz.entity;
 
-import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
+import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
+import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
  * <p>
- *
+ * 菜单表
  * </p>
  *
  * @author yixz
- * @since 2021-12-22
+ * @since 2022-09-24
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("t_menu")
-public class Menu{
+public class Menu {
+
+    /**
+     * 主键
+     */
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
     /**
-     * 父id
-     */
-    private Integer pid;
-
-    /**
      * 菜单名称
      */
-    private String name;
+    private String menuName;
 
     /**
-     * 菜单路径
+     * 菜单编码
+     */
+    private String menuCode;
+
+    /**
+     * 图标
+     */
+    private String icon;
+
+    /**
+     * 菜单编码
+     */
+    private Integer parentId;
+
+    /**
+     * 路由
      */
     private String url;
 
     /**
-     * 授权
+     * 权限
      */
-    private String perm;
+    private String perms;
 
     /**
-     * 菜单类型，1-目录，2-菜单，3-按钮
+     * 类型，1-目录，2-菜单，3-按钮
      */
     private Integer type;
 
@@ -75,4 +95,5 @@ public class Menu{
      */
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private String updatedBy;
+
 }

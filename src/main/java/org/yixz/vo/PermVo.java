@@ -13,5 +13,5 @@ public class PermVo {
     /**
      * 权限标识
      */
-    private String perm;
+    private String perms;
 }

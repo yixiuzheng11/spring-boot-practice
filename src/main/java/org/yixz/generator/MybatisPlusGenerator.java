@@ -17,7 +17,7 @@ public class MybatisPlusGenerator {
     //项目路径
     final static String  dirPath = System.getProperty("user.dir");
     //需要生成代码的表名
-    final static String[]  tableNames = new String[] {"t_menu", "t_user_role", "t_role_menu"};
+    final static String[]  tableNames = new String[] {"t_menu", "t_role", "t_user", "t_user_role", "t_role_menu"};
 
     public static String scanner(String tip) {
         Scanner scanner = new Scanner(System.in);
@@ -51,7 +51,7 @@ public class MybatisPlusGenerator {
         dsc.setDbType(DbType.MYSQL);
         dsc.setDriverName("com.mysql.cj.jdbc.Driver");
         dsc.setUsername("root");
-        dsc.setPassword("Pabst@2020");
+        dsc.setPassword("1234@wu");
         dsc.setUrl("jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai");
         mpg.setDataSource(dsc);
 

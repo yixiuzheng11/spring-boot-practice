@@ -5,9 +5,8 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="org.yixz.entity.Role">
         <id column="id" property="id" />
-        <result column="role_code" property="roleCode" />
         <result column="role_name" property="roleName" />
-        <result column="void_flag" property="voidFlag" />
+        <result column="role_code" property="roleCode" />
         <result column="created_date" property="createdDate" />
         <result column="updated_date" property="updatedDate" />
         <result column="created_by" property="createdBy" />
@@ -16,7 +15,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, role_code, role_name, void_flag, created_date, updated_date, created_by, updated_by
+        id, role_name, role_code, created_date, updated_date, created_by, updated_by
     </sql>
 
 </mapper>

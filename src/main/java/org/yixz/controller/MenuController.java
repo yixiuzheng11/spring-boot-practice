@@ -27,12 +27,6 @@ public class MenuController {
     @Resource
     private MenuServiceImpl menuService;
 
-    @ApiOperation("层级菜单查询")
-    @PostMapping("/getTreeMenu")
-    public List<MenuVo> getTreeMenu() {
-        return menuService.getTreeMenu();
-    }
-
     @ApiOperation("菜单分页查询")
     @PostMapping("/getPage")
     public Page<Menu> getPage(@RequestBody MenuDto dto) {
