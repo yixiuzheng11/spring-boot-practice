@@ -1,20 +1,16 @@
 package org.yixz.service;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.yixz.dto.MenuDto;
 import org.yixz.entity.Menu;
-import org.yixz.enums.MenuTypeEnum;
 import org.yixz.mapper.MenuMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.yixz.vo.MenuVo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -29,11 +25,11 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> {
 
     public Page<Menu> getPage(MenuDto dto) {
         Page page = new Page(dto.getPageNum(), dto.getPageSize());
-        QueryWrapper<Menu> queryWrapper = new QueryWrapper();
-        queryWrapper.eq(dto.getParentId()!=null, "parent_id", dto.getParentId());
-        queryWrapper.eq(StringUtils.isNotEmpty(dto.getUrl()), "url", dto.getUrl());
-        queryWrapper.eq(StringUtils.isNotEmpty(dto.getType()), "type", dto.getType());
-        queryWrapper.like(StringUtils.isNotEmpty(dto.getMenuName()), "name", dto.getMenuName());
+        LambdaQueryWrapper<Menu> queryWrapper = Wrappers.lambdaQuery(Menu.class);
+        queryWrapper.eq(dto.getParentId()!=null, Menu::getParentId, dto.getParentId());
+        queryWrapper.eq(StringUtils.isNotEmpty(dto.getUrl()), Menu::getUrl, dto.getUrl());
+        queryWrapper.eq(StringUtils.isNotEmpty(dto.getType()), Menu::getType, dto.getType());
+        queryWrapper.like(StringUtils.isNotEmpty(dto.getMenuName()), Menu::getMenuName, dto.getMenuName());
         return baseMapper.selectPage(page, queryWrapper);
     }
 
