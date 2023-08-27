@@ -18,10 +18,12 @@ public class ResponseResult implements Serializable {
      * 返回状态码
      */
     private String code;
+
     /**
      * 返回信息
      */
     private String msg;
+
     /**
      * 数据
      */

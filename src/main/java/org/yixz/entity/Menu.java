@@ -48,7 +48,7 @@ public class Menu {
     private String icon;
 
     /**
-     * 菜单编码
+     * 父菜单id
      */
     private Integer parentId;
 

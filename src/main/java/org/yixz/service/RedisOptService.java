@@ -319,30 +319,6 @@ public class RedisOptService {
     }
 
     /**
-     * 根据matchKey匹配查询
-     *
-     * @param matchKey
-     * @param count    用来限制hint
-     * @return
-     */
-    public Set<String> getScan(String matchKey, int count) {
-
-        return (Set<String>) redisTemplate.execute((RedisCallback<Set<String>>) connection -> {
-
-            Set<String> binaryKeys = new HashSet<>();
-
-            Cursor<byte[]> cursor = connection.scan(new ScanOptions.ScanOptionsBuilder()
-                    .match(matchKey)
-                    .count(count)
-                    .build());
-            while (cursor.hasNext()) {
-                binaryKeys.add(new String(cursor.next()));
-            }
-            return binaryKeys;
-        });
-    }
-
-    /**
      * 增加(自增长), 负数则为自减
      */
     public Long incrBy(String key, long increment) {
@@ -361,34 +337,6 @@ public class RedisOptService {
             } catch (Exception e) {
                 return 0;
             }
-        });
-    }
-
-    public boolean lock(String key, long expire) {
-        String lock = key;
-        return (Boolean) redisTemplate.execute((RedisCallback) connection -> {
-
-            long expireAt = System.currentTimeMillis() + expire + 1;
-            Boolean acquire = connection.setNX(lock.getBytes(), String.valueOf(expireAt).getBytes());
-
-            if (acquire) {
-                return true;
-            } else {
-
-                byte[] value = connection.get(lock.getBytes());
-
-                if (Objects.nonNull(value) && value.length > 0) {
-
-                    long expireTime = Long.parseLong(new String(value));
-                    // 如果锁已经过期
-                    if (expireTime < System.currentTimeMillis()) {
-                        // 重新加锁，防止死锁
-                        byte[] oldValue = connection.getSet(lock.getBytes(), String.valueOf(System.currentTimeMillis() + expire + 1).getBytes());
-                        return Long.parseLong(new String(oldValue)) < System.currentTimeMillis();
-                    }
-                }
-            }
-            return false;
         });
     }
 

@@ -1,17 +1,17 @@
 package org.yixz;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.MockitoAnnotations;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Spy;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.yixz.dto.MenuDto;
 import org.yixz.mapper.MenuMapper;
 import org.yixz.service.MenuServiceImpl;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class MockitoTest {
     @Spy
     MenuServiceImpl menuService;
@@ -19,15 +19,28 @@ public class MockitoTest {
     @Spy
     MenuMapper menuMapper;
 
-    @Before
-    public void before() {
-        //Mockito注解初始化
-        MockitoAnnotations.initMocks(this);
-        ReflectionTestUtils.setField(menuService, "baseMapper", menuMapper);
+
+    /**
+     * 在所有测试方法之前执行的方法
+     */
+    @BeforeAll
+    static void doBefore() {
+        System.out.println("开始测试");
     }
+
+    /**
+     * 在所有测试方法之后执行的方法
+     */
+    @AfterAll
+    static void doAfter() {
+        System.out.println("结束测试");
+    }
+
 
     @Test
     public void test() {
+        ReflectionTestUtils.setField(menuService, "baseMapper", menuMapper);
         menuService.add(new MenuDto());
+        System.out.println("test--------");
     }
 }

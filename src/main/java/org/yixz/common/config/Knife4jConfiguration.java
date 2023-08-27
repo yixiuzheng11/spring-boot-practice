@@ -1,5 +1,6 @@
 package org.yixz.common.config;
 
+import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -9,6 +10,7 @@ import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
 
 /**
@@ -18,7 +20,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
  * @date 2021年12月15日 16:36
  */
 @Configuration
-@EnableSwagger2WebMvc
+@EnableKnife4j
+@EnableSwagger2
 public class Knife4jConfiguration {
 
     // swagger2的配置文件，这里可以配置swagger2的一些基本的内容，比如扫描的包等等
@@ -42,42 +45,10 @@ public class Knife4jConfiguration {
                 // 描述
                 .description("swagger-bootstrap-ui")
                 // 创建人信息
-                .contact(new Contact("yixiuzheng",  "https://www.cnblogs.com/zs-notes/category/1258467.html",  "yixiuzheng11@163.com"))
+                .contact(new Contact("yixiuzheng",  "https://github.com/yixiuzheng11",  "1546267208@qq.com"))
                 .termsOfServiceUrl("http://localhost:9090/")
                 // 版本号
                 .version("1.0")
                 .build();
     }
-
-    /*@Bean
-    public static BeanPostProcessor springfoxHandlerProviderBeanPostProcessor() {
-        return new BeanPostProcessor() {
-            @Override
-            public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
-                if (bean instanceof WebMvcRequestHandlerProvider || bean instanceof WebFluxRequestHandlerProvider) {
-                    customizeSpringfoxHandlerMappings(getHandlerMappings(bean));
-                }
-                return bean;
-            }
-
-            private <T extends RequestMappingInfoHandlerMapping> void customizeSpringfoxHandlerMappings(List<T> mappings) {
-                List<T> copy = mappings.stream()
-                        .filter(mapping -> mapping.getPatternParser() == null)
-                        .collect(Collectors.toList());
-                mappings.clear();
-                mappings.addAll(copy);
-            }
-
-            @SuppressWarnings("unchecked")
-            private List<RequestMappingInfoHandlerMapping> getHandlerMappings(Object bean) {
-                try {
-                    Field field = ReflectionUtils.findField(bean.getClass(), "handlerMappings");
-                    field.setAccessible(true);
-                    return (List<RequestMappingInfoHandlerMapping>) field.get(bean);
-                } catch (IllegalArgumentException | IllegalAccessException e) {
-                    throw new IllegalStateException(e);
-                }
-            }
-        };
-    }*/
 }
