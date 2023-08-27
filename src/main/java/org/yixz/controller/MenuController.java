@@ -22,7 +22,7 @@ import java.util.List;
  */
 @Api(tags = "菜单管理")
 @RestController
-@RequestMapping("/system/menu")
+@RequestMapping("/sys/menu")
 public class MenuController {
     @Resource
     private MenuServiceImpl menuService;
@@ -50,4 +50,6 @@ public class MenuController {
     public void delete(@RequestBody MenuDto dto) {
         menuService.delete(dto.getId());
     }
+
+
 }
