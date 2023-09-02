@@ -7,17 +7,17 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.util.ReflectionTestUtils;
-import org.yixz.dto.MenuDto;
-import org.yixz.mapper.MenuMapper;
-import org.yixz.service.MenuServiceImpl;
+import org.yixz.dto.SysMenuDto;
+import org.yixz.mapper.SysMenuMapper;
+import org.yixz.service.SysMenuService;
 
 @ExtendWith(MockitoExtension.class)
 public class MockitoTest {
     @Spy
-    MenuServiceImpl menuService;
+    SysMenuService menuService;
 
     @Spy
-    MenuMapper menuMapper;
+    SysMenuMapper sysMenuMapper;
 
 
     /**
@@ -39,8 +39,8 @@ public class MockitoTest {
 
     @Test
     public void test() {
-        ReflectionTestUtils.setField(menuService, "baseMapper", menuMapper);
-        menuService.add(new MenuDto());
+        ReflectionTestUtils.setField(menuService, "baseMapper", sysMenuMapper);
+        menuService.add(new SysMenuDto());
         System.out.println("test--------");
     }
 }

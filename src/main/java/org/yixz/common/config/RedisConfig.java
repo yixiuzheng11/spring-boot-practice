@@ -16,7 +16,7 @@ import org.springframework.data.redis.serializer.RedisSerializer;
 /**
  * 描述
  *
- * @author YIXIUZHENG741
+ * @author yixiuzheng11
  * @date 2022年01月07日 16:14
  */
 @Configuration

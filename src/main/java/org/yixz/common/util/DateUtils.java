@@ -10,7 +10,7 @@ import java.util.Date;
 /**
  * 描述
  *
- * @author YIXIUZHENG741
+ * @author yixiuzheng11
  * @date 2021年12月17日 17:14
  */
 public class DateUtils {
@@ -22,7 +22,7 @@ public class DateUtils {
 
     /**
      * LocalDate转Date
-     * @author YIXIUZHENG741
+     * @author yixiuzheng11
      * @date 2021/8/23 10:50
      * @param localDate
      * @return java.util.Date
@@ -33,7 +33,7 @@ public class DateUtils {
 
     /**
      * LocalDateTime转Date
-     * @author YIXIUZHENG741
+     * @author yixiuzheng11
      * @date 2021/8/23 10:50
      * @param localDateTime
      * @return java.util.Date
@@ -44,7 +44,7 @@ public class DateUtils {
 
     /**
      * Date转LocalDate
-     * @author YIXIUZHENG741
+     * @author yixiuzheng11
      * @date 2021/8/23 10:51
      * @param date
      * @return java.time.LocalDate
@@ -55,7 +55,7 @@ public class DateUtils {
 
     /**
      * Date转LocalDateTime
-     * @author YIXIUZHENG741
+     * @author yixiuzheng11
      * @date 2021/8/23 10:52
      * @param date
      * @return java.time.LocalDateTime
@@ -66,7 +66,7 @@ public class DateUtils {
 
     /**
      * 将Date根据指定的日期进行格式化
-     * @author YIXIUZHENG741
+     * @author yixiuzheng11
      * @date 2021/8/23 10:52
      * @param date
      * @param pattern
@@ -79,7 +79,7 @@ public class DateUtils {
 
     /**
      * 将Date格式化，格式：yyyy-MM-dd
-     * @author YIXIUZHENG741
+     * @author yixiuzheng11
      * @date 2021/8/23 10:52
      * @param date
      * @return java.lang.String
@@ -90,7 +90,7 @@ public class DateUtils {
 
     /**
      * 将Date格式化，格式：yyyy-MM-dd HH:mm:ss
-     * @author YIXIUZHENG741
+     * @author yixiuzheng11
      * @date 2021/8/23 10:54
      * @param date
      * @return java.lang.String
@@ -101,7 +101,7 @@ public class DateUtils {
 
     /**
      * 将Date根据指定的日期格式化
-     * @author YIXIUZHENG741
+     * @author yixiuzheng11
      * @date 2021/8/23 10:54
      * @param date
      * @return java.lang.String
@@ -113,7 +113,7 @@ public class DateUtils {
 
     /**
      * 将格式为yyyy-MM-dd的字符串转换成Date
-     * @author YIXIUZHENG741
+     * @author yixiuzheng11
      * @date 2021/8/23 10:55
      * @param str
      * @return java.util.Date
@@ -127,7 +127,7 @@ public class DateUtils {
 
     /**
      * 将指定格式pattern的字符串转换成Date
-     * @author YIXIUZHENG741
+     * @author yixiuzheng11
      * @date 2021/8/23 10:56
      * @param str
      * @param pattern
@@ -143,7 +143,7 @@ public class DateUtils {
 
     /**
      * 将格式为yyyy-MM-dd HH:mm:ss的字符串转换成Date
-     * @author YIXIUZHENG741
+     * @author yixiuzheng11
      * @date 2021/8/23 10:55
      * @param str
      * @return java.util.Date
@@ -157,7 +157,7 @@ public class DateUtils {
 
     /**
      * 将指定格式pattern的字符串转换成Date
-     * @author YIXIUZHENG741
+     * @author yixiuzheng11
      * @date 2021/8/23 10:59
      * @param str
      * @param pattern
@@ -174,7 +174,7 @@ public class DateUtils {
 
     /**
      * 已给定日期为准，天数进行加减，返回日期，不包含时间
-     * @author YIXIUZHENG741
+     * @author yixiuzheng11
      * @date 2021/8/11 19:42
      * @param days
      * @return java.lang.String
@@ -187,7 +187,7 @@ public class DateUtils {
 
     /**
      * 已当前日期为准，天数进行加减，返回日期时间
-     * @author YIXIUZHENG741
+     * @author yixiuzheng11
      * @date 2021/8/11 19:42
      * @param days
      * @return java.lang.String

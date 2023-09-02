@@ -1,7 +1,7 @@
 package org.yixz.enums;
 
 /**
- * @author YIXIUZHENG741
+ * @author yixiuzheng11
  * @date 2021年12月22日 14:46
  */
 public enum MenuTypeEnum {

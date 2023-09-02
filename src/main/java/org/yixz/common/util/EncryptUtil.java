@@ -13,7 +13,7 @@ import java.security.SecureRandom;
 /**
  * 描述
  *
- * @author YIXIUZHENG741
+ * @author yixiuzheng11
  * @date 2021年11月29日 16:47
  */
 public class EncryptUtil {

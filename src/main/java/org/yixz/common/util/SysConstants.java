@@ -3,7 +3,7 @@ package org.yixz.common.util;
 /**
  * 描述
  *
- * @author YIXIUZHENG741
+ * @author yixiuzheng11
  * @date 2021年12月20日 18:14
  */
 public class SysConstants {
