@@ -87,16 +87,18 @@ public class VerifyImgUtil {
     }
 
     /**
-     * 将验证码放到缓存里
+     * 校验验证码
      *
-     * @param tempToken  临时token，作为验证码写入缓存的key
+     * @param loginDto
      */
-    public boolean checkVerifyCode(LoginDto loginDto, String tempToken) {
+    public boolean checkVerifyCode(LoginDto loginDto, HttpServletRequest request) {
         if(StringUtils.isEmpty(loginDto.getVerifyCode())) {
             return false;
         }
+        // 从cookie中获取验证码对应的唯一key
+        String verifyCodeKey = this.getVerifyCodeKey(request);
         //校验
-        String rdsVerifyCode = (String) redisUtil.get(tempToken);
+        String rdsVerifyCode = (String) redisUtil.get(verifyCodeKey);
         if (loginDto.getVerifyCode().equalsIgnoreCase(rdsVerifyCode)) {
             return true;
         }
@@ -111,13 +113,18 @@ public class VerifyImgUtil {
      */
     public void geneVerifyCode(HttpServletRequest request, HttpServletResponse response, OutputStream os) {
         // 从cookie中获取验证码对应的唯一key
+        String verifyCodeKey = this.getVerifyCodeKey(request);
+        if (StringUtils.isBlank(verifyCodeKey)) {
+            verifyCodeKey = UUID.randomUUID().toString().replace("-", "");
+        }
+        // 这里每个请求都add新cookie，如果不每次add，则有可能会导致cookie的path发生变化
+        response.addCookie(CookieUtil.generateCookie(SaTokenConstant.USER_LOGIN_VERIFY_CODE_COOKIE_NAME, verifyCodeKey ,request));
+        this.shearCaptcha(os, verifyCodeKey);
+    }
+
+    public String getVerifyCodeKey(HttpServletRequest request) {
         String verifyKey = Optional.ofNullable(WebUtils.getCookie(request, SaTokenConstant.USER_LOGIN_VERIFY_CODE_COOKIE_NAME))
                 .map(Cookie::getValue).orElse(null);
-        if (StringUtils.isBlank(verifyKey)) {
-            verifyKey = UUID.randomUUID().toString().replace("-", "");
-        }
-        // 这里每个请求都add新cookie，如果不每次add，则有可能会导致 cookie的path发生变化
-        response.addCookie(CookieUtil.generateCookie(SaTokenConstant.USER_LOGIN_VERIFY_CODE_COOKIE_NAME, verifyKey ,request));
-        this.lineCaptcha(os, verifyKey);
+        return verifyKey;
     }
 }
