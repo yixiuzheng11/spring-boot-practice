@@ -1,7 +1,6 @@
 package org.yixz.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.media.SchemaProperty;
 import lombok.Data;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
