@@ -3,7 +3,7 @@
 <mapper namespace="org.yixz.mapper.SysMenuMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="org.yixz.entity.SysMenu">
+    <resultMap id="BaseResultMap" type="org.yixz.entity.mysql.SysMenu">
         <id column="id" property="id" />
         <result column="menu_name" property="menuName" />
         <result column="menu_code" property="menuCode" />

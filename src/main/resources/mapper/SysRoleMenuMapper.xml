@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.yixz.mapper.SysRoleMenuMapper">
 
-    <select id="getUserPermByUserName" resultType="org.yixz.vo.UserRolePermVo">
+    <select id="getUserPermByUserName" resultType="org.yixz.entity.vo.UserRolePermVo">
         SELECT
         user.id,
         user.user_name,

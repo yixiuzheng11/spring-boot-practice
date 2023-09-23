@@ -1,4 +1,4 @@
-package org.yixz.enums;
+package org.yixz.common.enums;
 
 /**
  * @author yixiuzheng11

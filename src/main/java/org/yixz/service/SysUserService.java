@@ -7,8 +7,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
-import org.yixz.dto.SysUserDto;
-import org.yixz.entity.SysUser;
+import org.yixz.entity.dto.SysUserDto;
+import org.yixz.entity.mysql.SysUser;
 import org.yixz.mapper.SysUserMapper;
 
 /**

@@ -1,4 +1,4 @@
-package org.yixz.dto.record;
+package org.yixz.entity.dto.record;
 
 import cn.afterturn.easypoi.excel.annotation.Excel;
 import lombok.Data;

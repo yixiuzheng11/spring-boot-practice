@@ -1,4 +1,4 @@
-package org.yixz.entity;
+package org.yixz.entity.mysql;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
@@ -14,15 +14,16 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 角色表
+ * 用户表
  * </p>
  *
  * @author yixz
  * @since 2022-09-24
  */
 @Data
-@TableName("sys_role")
-public class SysRole {
+@TableName("sys_user")
+public class SysUser {
+
     /**
      * 主键
      */
@@ -30,14 +31,19 @@ public class SysRole {
     private Integer id;
 
     /**
-     * 角色名称
+     * 用户名
      */
-    private String roleName;
+    private String userName;
 
     /**
-     * 状态，1-有效，0-无效
+     * 用户姓名
      */
-    private Integer dataStatus;
+    private String fullName;
+
+    /**
+     * 密码
+     */
+    private String password;
 
     /**
      * 创建时间

@@ -7,7 +7,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.util.ReflectionTestUtils;
-import org.yixz.dto.SysMenuDto;
+import org.yixz.entity.dto.SysMenuDto;
 import org.yixz.mapper.SysMenuMapper;
 import org.yixz.service.SysMenuService;
 

@@ -1,6 +1,6 @@
 package org.yixz.mapper;
 
-import org.yixz.entity.SysUser;
+import org.yixz.entity.mysql.SysUser;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

@@ -1,4 +1,4 @@
-package org.yixz.vo;
+package org.yixz.entity.vo;
 
 import lombok.Data;
 

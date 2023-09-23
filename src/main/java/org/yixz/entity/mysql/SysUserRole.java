@@ -1,4 +1,4 @@
-package org.yixz.entity;
+package org.yixz.entity.mysql;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;

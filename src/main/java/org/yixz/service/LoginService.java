@@ -7,7 +7,7 @@ import org.springframework.web.util.WebUtils;
 import org.yixz.common.constant.SaTokenConstant;
 import org.yixz.common.exception.BizException;
 import org.yixz.common.util.VerifyImgUtil;
-import org.yixz.dto.LoginDto;
+import org.yixz.entity.dto.LoginDto;
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;

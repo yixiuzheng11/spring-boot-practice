@@ -1,4 +1,4 @@
-package org.yixz.vo;
+package org.yixz.entity.vo;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;

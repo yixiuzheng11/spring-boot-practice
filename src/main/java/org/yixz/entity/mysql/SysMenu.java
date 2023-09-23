@@ -1,4 +1,4 @@
-package org.yixz.entity;
+package org.yixz.entity.mysql;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
@@ -14,16 +14,15 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 角色菜单表
+ * 菜单表
  * </p>
  *
  * @author yixz
  * @since 2022-09-24
  */
 @Data
-@TableName("sys_role_menu")
-public class SysRoleMenu {
-
+@TableName("sys_menu")
+public class SysMenu {
     /**
      * 主键
      */
@@ -31,14 +30,44 @@ public class SysRoleMenu {
     private Integer id;
 
     /**
-     * 角色id
+     * 菜单名称
      */
-    private Integer roleId;
+    private String menuName;
 
     /**
-     * 角色id
+     * 菜单类型，button-按钮，directory-目录，menu-菜单
      */
-    private Integer menuId;
+    private String menuType;
+
+    /**
+     * 父菜单id
+     */
+    private Integer parentId;
+
+    /**
+     * 图标
+     */
+    private String icon;
+
+    /**
+     * 路由
+     */
+    private String url;
+
+    /**
+     * 权限
+     */
+    private String perms;
+
+    /**
+     * 排序
+     */
+    private Integer sortNo;
+
+    /**
+     * 状态，1-有效，0-无效
+     */
+    private Integer dataStatus;
 
     /**
      * 创建时间
