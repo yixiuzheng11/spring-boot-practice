@@ -1,11 +1,11 @@
 package org.yixz.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.yixz.dto.SysMenuDto;
 import org.yixz.entity.SysMenu;
 import org.yixz.service.SysMenuService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,32 +18,32 @@ import javax.annotation.Resource;
  * @author yixiuzheng11
  * @date 2021年11月25日 19:05
  */
-@Api(tags = "菜单管理")
+@Tag(name = "菜单管理")
 @RestController
 @RequestMapping("/sys/menu")
 public class MenuController {
     @Resource
     private SysMenuService menuService;
 
-    @ApiOperation("菜单分页查询")
+    @Operation(summary = "菜单分页查询")
     @PostMapping("/getPage")
     public Page<SysMenu> getPage(@RequestBody SysMenuDto dto) {
         return menuService.getPage(dto);
     }
 
-    @ApiOperation("菜单新增")
+    @Operation(summary = "菜单新增")
     @PostMapping("/add")
     public Integer add(@RequestBody SysMenuDto dto) {
         return menuService.add(dto);
     }
 
-    @ApiOperation("菜单修改")
+    @Operation(summary = "菜单修改")
     @PostMapping("/update")
     public void update(@RequestBody SysMenuDto dto) {
         menuService.update(dto);
     }
 
-    @ApiOperation("菜单删除")
+    @Operation(summary = "菜单删除")
     @PostMapping("/delete")
     public void delete(@RequestBody SysMenuDto dto) {
         menuService.delete(dto.getId());

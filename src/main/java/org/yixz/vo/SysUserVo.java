@@ -1,7 +1,7 @@
 package org.yixz.vo;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.SchemaProperty;
 import lombok.Data;
 
 /**
@@ -10,11 +10,11 @@ import lombok.Data;
  * @date 2021年12月23日 9:45
  */
 @Data
-@ApiModel(value = "用户信息")
+@Schema(description = "用户信息")
 public class SysUserVo {
-    @ApiModelProperty(value = "用户名")
+    @Schema(description = "用户名")
     private String username;
 
-    @ApiModelProperty(value = "密码")
+    @Schema(description = "密码")
     private String fullName;
 }

@@ -1,7 +1,7 @@
 package org.yixz.dto;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.SchemaProperty;
 import lombok.Data;
 
 
@@ -12,12 +12,12 @@ import lombok.Data;
  * @date 2021年07月22日 17:04
  */
 @Data
-@ApiModel("登录请求参数")
+@Schema(description = "登录请求参数")
 public class LoginDto {
 
-    @ApiModelProperty(value = "用户名称")
+    @Schema(description = "用户名称")
     private String userName;
 
-    @ApiModelProperty(value = "验证码")
+    @Schema(description = "验证码")
     private String verifyCode;
 }

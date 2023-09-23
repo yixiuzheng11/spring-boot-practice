@@ -1,7 +1,6 @@
 package org.yixz.dto;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 /**
@@ -11,24 +10,24 @@ import lombok.Data;
  * @date 2021年07月22日 17:04
  */
 @Data
-@ApiModel("菜单请求参数")
-public class SysMenuDto {
-    @ApiModelProperty(value = "菜单id")
+@Schema(description = "菜单请求参数")
+public class SysMenuDto extends BaseDto{
+    @Schema(description = "菜单id")
     private Integer id;
 
-    @ApiModelProperty(value = "菜单名称")
+    @Schema(description = "菜单名称")
     private String menuName;
 
-    @ApiModelProperty(value = "父id")
+    @Schema(description = "父id")
     private Integer parentId;
 
-    @ApiModelProperty(value = "菜单路径")
+    @Schema(description = "菜单路径")
     private String url;
 
-    @ApiModelProperty(value = "菜单类型")
+    @Schema(description = "菜单类型")
     private String menuType;
 
-    @ApiModelProperty(value = "权限")
+    @Schema(description = "权限")
     private String perms;
 
 }

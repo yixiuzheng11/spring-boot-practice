@@ -1,7 +1,7 @@
 package org.yixz.dto;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.SchemaProperty;
 import lombok.Data;
 
 /**
@@ -11,11 +11,11 @@ import lombok.Data;
  * @date 2021年07月22日 17:04
  */
 @Data
-@ApiModel("基础参数")
+@Schema(description = "基础参数")
 public class BaseDto {
-    @ApiModelProperty(value = "当前页")
+    @Schema(description = "当前页")
     private Integer pageNum = 1;
 
-    @ApiModelProperty(value = "分页大小")
+    @Schema(description = "分页大小")
     private Integer pageSize = 15;
 }

@@ -1,5 +1,6 @@
 package org.yixz.vo;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 /**
@@ -9,28 +10,18 @@ import lombok.Data;
  */
 @Data
 public class UserRolePermVo {
-    /**
-     * 用户id
-     */
+    @Schema(description="用户id")
     private Integer userId;
 
-    /**
-     * 用户名
-     */
+    @Schema(description="用户名")
     private String userName;
 
-    /**
-     * 密码
-     */
+    @Schema(description="密码")
     private String password;
 
-    /**
-     * 角色
-     */
+    @Schema(description="角色编码")
     private String roleCode;
 
-    /**
-     * 权限标识
-     */
+    @Schema(description="权限标识")
     private String perms;
 }

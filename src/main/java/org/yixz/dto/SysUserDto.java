@@ -1,7 +1,7 @@
 package org.yixz.dto;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.SchemaProperty;
 import lombok.Data;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -13,26 +13,26 @@ import java.time.LocalDateTime;
  * @date 2021年07月22日 17:04
  */
 @Data
-@ApiModel("用户请求参数")
-public class SysUserDto {
-    @ApiModelProperty(value = "用户id")
+@Schema(description = "用户请求参数")
+public class SysUserDto extends BaseDto{
+    @Schema(description = "用户id")
     private Integer id;
 
-    @ApiModelProperty(value = "用户名称")
+    @Schema(description = "用户名称")
     private String userName;
 
-    @ApiModelProperty(value = "用户中文名称")
+    @Schema(description = "用户中文名称")
     private String fullName;
 
-    @ApiModelProperty(value = "密码")
+    @Schema(description = "密码")
     private String password;
 
-    @ApiModelProperty(value = "菜单类型")
+    @Schema(description = "菜单类型")
     private String menuType;
 
-    @ApiModelProperty(value = "创建日期")
+    @Schema(description = "创建日期")
     private LocalDateTime createdDate;
 
-    @ApiModelProperty(value = "更新日期")
+    @Schema(description = "更新日期")
     private LocalDate updatedDate;
 }

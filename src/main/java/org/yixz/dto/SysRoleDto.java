@@ -1,7 +1,7 @@
 package org.yixz.dto;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.SchemaProperty;
 import lombok.Data;
 
 /**
@@ -11,14 +11,14 @@ import lombok.Data;
  * @date 2021年07月22日 17:04
  */
 @Data
-@ApiModel("角色请求参数")
-public class SysRoleDto {
-    @ApiModelProperty(value = "角色id")
+@Schema(description = "角色请求参数")
+public class SysRoleDto extends BaseDto{
+    @Schema(description = "角色id")
     private Integer id;
 
-    @ApiModelProperty(value = "角色名称")
+    @Schema(description = "角色名称")
     private String roleName;
 
-    @ApiModelProperty(value = "角色编码")
+    @Schema(description = "角色编码")
     private String roleCode;
 }

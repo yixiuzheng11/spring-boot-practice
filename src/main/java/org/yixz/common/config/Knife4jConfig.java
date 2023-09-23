@@ -1,17 +1,10 @@
 package org.yixz.common.config;
 
-import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Contact;
+import io.swagger.v3.oas.models.info.Info;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import springfox.documentation.builders.ApiInfoBuilder;
-import springfox.documentation.builders.PathSelectors;
-import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.service.ApiInfo;
-import springfox.documentation.service.Contact;
-import springfox.documentation.spi.DocumentationType;
-import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
-import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
 
 /**
  * 描述
@@ -20,12 +13,21 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
  * @date 2021年12月15日 16:36
  */
 @Configuration
-@EnableKnife4j
-@EnableSwagger2
 public class Knife4jConfig {
 
-    // swagger2的配置文件，这里可以配置swagger2的一些基本的内容，比如扫描的包等等
     @Bean
+    public OpenAPI customOpenAPI() {
+        return new OpenAPI()
+                .info(new Info()
+                        .title("Knife4j示例项目 - 接口文档")
+                        .description("项目简介，支持Markdown格式：`这里是代码标签哦`，**这里是强调哦**")
+                        .version("V1.0")
+                        .contact(new Contact().name("yixiuzheng11"))
+                );
+    }
+
+    // swagger2的配置文件，这里可以配置swagger2的一些基本的内容，比如扫描的包等等
+    /*@Bean
     public Docket createRestApi() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .useDefaultResponseMessages(false)
@@ -50,5 +52,5 @@ public class Knife4jConfig {
                 // 版本号
                 .version("1.0")
                 .build();
-    }
+    }*/
 }
