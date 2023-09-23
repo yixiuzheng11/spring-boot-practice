@@ -9,6 +9,6 @@ import retrofit2.http.POST;
 
 public interface HttpApi {
 
-    @POST("/laip-bst-cms-content/whiteList/api/askbob/material/eoaAudit")
+    @POST("/api/eoaAudit")
     Call<CmsResult> postToCms(@Body CmsTaskReq cmsTaskReq);
 }
