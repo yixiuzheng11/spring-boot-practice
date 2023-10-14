@@ -7,12 +7,7 @@ public class SaTokenConstant {
     /**
      * token的字段名
      */
-    public static final String TOKEN_NAME = "token";
-
-    /**
-     * token无操作存活时间(指定时间内无操作就视为token过期) 单位：秒
-     */
-    public static final long ACTIVITY_TIMEOUT = 24 * 60 * 60;
+    public static final String TOKEN_NAME = "saToken";
 
     public static final String USER_LOGIN_VERIFY_CODE_COOKIE_NAME = "verifyCodeKey";
 
