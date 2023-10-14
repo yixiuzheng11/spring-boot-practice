@@ -16,7 +16,7 @@ public class SysMenuDto extends BaseDto{
     private Integer id;
 
     @Schema(description = "菜单名称")
-    private String menuName;
+    private String name;
 
     @Schema(description = "父id")
     private Integer parentId;
@@ -28,6 +28,6 @@ public class SysMenuDto extends BaseDto{
     private String menuType;
 
     @Schema(description = "权限")
-    private String perms;
+    private String perm;
 
 }

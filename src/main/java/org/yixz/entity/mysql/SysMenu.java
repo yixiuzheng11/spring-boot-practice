@@ -32,7 +32,7 @@ public class SysMenu {
     /**
      * 菜单名称
      */
-    private String menuName;
+    private String name;
 
     /**
      * 菜单类型，button-按钮，directory-目录，menu-菜单
@@ -57,7 +57,7 @@ public class SysMenu {
     /**
      * 权限
      */
-    private String perms;
+    private String perm;
 
     /**
      * 排序

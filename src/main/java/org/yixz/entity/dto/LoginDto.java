@@ -14,8 +14,11 @@ import lombok.Data;
 @Schema(description = "登录请求参数")
 public class LoginDto {
 
-    @Schema(description = "用户名称")
+    @Schema(description = "账号")
     private String userName;
+
+    @Schema(description = "密码")
+    private String password;
 
     @Schema(description = "验证码")
     private String verifyCode;

@@ -20,10 +20,7 @@ public class SysMenuVo {
     private Integer parentId;
 
     @Schema(description = "菜单名称")
-    private String menuName;
-
-    @Schema(description = "菜单编码")
-    private String menuCode;
+    private String name;
 
     @Schema(description = "菜单图标")
     private String icon;
@@ -32,7 +29,7 @@ public class SysMenuVo {
     private String url;
 
     @Schema(description = "授权")
-    private String perms;
+    private String perm;
 
     @Schema(description = "菜单类型，0-目录，1-菜单，2-按钮")
     private Integer menuType;
@@ -42,9 +39,6 @@ public class SysMenuVo {
 
     @Schema(description = "子菜单")
     private List<SysMenuVo> children;
-
-    @Schema(description = "按钮权限")
-    private List<SysMenuVo> permList;
 
     private Date createdDate;
 }

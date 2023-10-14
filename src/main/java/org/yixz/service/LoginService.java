@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import org.yixz.common.exception.BizException;
 import org.yixz.common.util.VerifyImgUtil;
 import org.yixz.entity.dto.LoginDto;
+import org.yixz.entity.mysql.SysUser;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
@@ -13,6 +15,9 @@ import javax.servlet.http.HttpServletRequest;
 public class LoginService {
     @Resource
     private VerifyImgUtil verifyImgUtil;
+
+    @Resource
+    private SysUserService sysUserService;
 
     /**
      * 登录
@@ -22,7 +27,7 @@ public class LoginService {
      */
     public String doLogin(LoginDto loginDto, HttpServletRequest request) {
         if(!checkLogin(loginDto, request)) {
-            throw new BizException("501", "账号或密码错误");
+            throw new BizException("账号或密码错误");
         }
         StpUtil.login(loginDto.getUserName());
         return StpUtil.getTokenValue();
@@ -35,6 +40,11 @@ public class LoginService {
      * @return
      */
     public boolean checkLogin(LoginDto loginDto, HttpServletRequest request) {
+        SysUser sysUser = sysUserService.getByUserName(loginDto.getUserName());
+        //校验密码
+        if(!sysUser.getPassword().equals(loginDto.getPassword())) {
+            return false;
+        }
         if(StringUtils.isEmpty(loginDto.getVerifyCode())) {
             return false;
         }

@@ -1,8 +1,7 @@
 package org.yixz.common.exception;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import org.yixz.common.response.ResponseCode;
 
 /**
  * 描述
@@ -11,8 +10,6 @@ import lombok.NoArgsConstructor;
  * @date 2021年07月22日 18:42
  */
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class BizException extends RuntimeException{
     /**
      * 返回状态码
@@ -23,4 +20,15 @@ public class BizException extends RuntimeException{
      * 返回信息
      */
     private String msg;
+
+    public BizException(String code, String msg) {
+        super(msg);
+        this.code = code;
+        this.msg = msg;
+    }
+
+    public BizException(String msg) {
+        super(msg);
+        this.msg = msg;
+    }
 }

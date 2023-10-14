@@ -2,6 +2,7 @@ package org.yixz.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.commons.lang3.StringUtils;
@@ -48,5 +49,9 @@ public class SysUserService extends ServiceImpl<SysUserMapper, SysUser>{
 
     public void delete(Integer id) {
         baseMapper.deleteById(id);
+    }
+
+    public SysUser getByUserName(String userName) {
+        return this.getOne(Wrappers.lambdaQuery(SysUser.class).eq(SysUser::getUserName, userName).last("limit 1"));
     }
 }
