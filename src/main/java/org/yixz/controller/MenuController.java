@@ -3,13 +3,11 @@ package org.yixz.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.web.bind.annotation.*;
 import org.yixz.entity.dto.SysMenuDto;
 import org.yixz.entity.mysql.SysMenu;
 import org.yixz.service.SysMenuService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+
 import javax.annotation.Resource;
 
 /**
@@ -49,4 +47,9 @@ public class MenuController {
         menuService.delete(dto.getId());
     }
 
+    @Operation(summary = "导航菜单那")
+    @GetMapping("/getNav")
+    public void getNav() {
+        menuService.getNav();
+    }
 }

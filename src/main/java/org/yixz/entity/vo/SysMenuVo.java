@@ -31,8 +31,8 @@ public class SysMenuVo {
     @Schema(description = "授权")
     private String perm;
 
-    @Schema(description = "菜单类型，0-目录，1-菜单，2-按钮")
-    private Integer menuType;
+    @Schema(description = "菜单类型，node-目录，menu-菜单，btn-按钮")
+    private String menuType;
 
     @Schema(description = "排序")
     private Integer sortNo;
