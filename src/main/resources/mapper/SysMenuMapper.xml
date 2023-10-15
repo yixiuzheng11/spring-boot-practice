@@ -7,6 +7,6 @@
         from sys_user a inner join sys_user_role b on a.id=b.user_id
                         inner join sys_role_menu c on b.role_id =c.role_id
                         inner join sys_menu d on c.menu_id = d.id
-        where a.user_name =#{userName}
+        where a.id=#{userId}
     </select>
 </mapper>

@@ -26,10 +26,11 @@ public class LoginService {
      * @return
      */
     public String doLogin(LoginDto loginDto, HttpServletRequest request) {
-        if(!checkLogin(loginDto, request)) {
+        SysUser sysUser = checkLogin(loginDto, request);
+        if(sysUser==null) {
             throw new BizException("账号或密码错误");
         }
-        StpUtil.login(loginDto.getUserName());
+        StpUtil.login(sysUser.getId());
         return StpUtil.getTokenValue();
     }
 
@@ -39,18 +40,23 @@ public class LoginService {
      * @param request
      * @return
      */
-    public boolean checkLogin(LoginDto loginDto, HttpServletRequest request) {
+    public SysUser checkLogin(LoginDto loginDto, HttpServletRequest request) {
         SysUser sysUser = sysUserService.getByUserName(loginDto.getUserName());
+        if(sysUser==null) {
+            return null;
+        }
         //校验密码
         if(!sysUser.getPassword().equals(loginDto.getPassword())) {
-            return false;
+            return null;
         }
         if(StringUtils.isEmpty(loginDto.getVerifyCode())) {
-            return false;
+            return null;
         }
         //校验验证码
         boolean verifyCodeFlag = verifyImgUtil.checkVerifyCode(loginDto, request);
-        boolean userFlag = true;
-        return verifyCodeFlag && userFlag;
+        if(verifyCodeFlag) {
+            return sysUser;
+        }
+        return null;
     }
 }

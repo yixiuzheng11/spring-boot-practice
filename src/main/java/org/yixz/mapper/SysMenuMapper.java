@@ -17,5 +17,5 @@ import java.util.List;
  */
 public interface SysMenuMapper extends BaseMapper<SysMenu> {
 
-    List<SysMenuVo> getAuthMenu(@Param("userName") String userName);
+    List<SysMenuVo> getAuthMenu(@Param("userId") Integer userId);
 }

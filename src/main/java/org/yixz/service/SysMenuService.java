@@ -68,11 +68,11 @@ public class SysMenuService extends ServiceImpl<SysMenuMapper, SysMenu> {
      * @return
      */
     public NavVo getNav() {
-        String userName = (String) StpUtil.getLoginId();
-        if(StringUtils.isEmpty(userName)) {
+        Integer userId = Integer.parseInt(StpUtil.getLoginId().toString());
+        if(userId==null) {
             return new NavVo();
         }
-        List<SysMenuVo> menuVoList = baseMapper.getAuthMenu(userName);
+        List<SysMenuVo> menuVoList = baseMapper.getAuthMenu(userId);
         //目录菜单
         List<SysMenuVo> menuList = menuVoList.stream().filter(item->!MenuTypeEnum.BTN_TYPE.equals(item.getMenuType())).collect(Collectors.toList());
         //按钮
