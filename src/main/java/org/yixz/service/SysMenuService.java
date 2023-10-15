@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import org.apache.poi.ss.formula.functions.Na;
 import org.yixz.common.enums.MenuTypeEnum;
 import org.yixz.entity.dto.SysMenuDto;
 import org.yixz.entity.mysql.SysMenu;
@@ -16,7 +15,6 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -80,9 +78,9 @@ public class SysMenuService extends ServiceImpl<SysMenuMapper, SysMenu> {
         //按钮
         List<String> btnList = menuVoList.stream().filter(item->MenuTypeEnum.BTN_TYPE.equals(item.getMenuType())).map(item->item.getPerm()).collect(Collectors.toList());
         //生成树形结构
-        List<SysMenuVo> treeList = generateTrees(menuList);
+        //List<SysMenuVo> treeList = generateTrees(menuList);
         NavVo navVo = new NavVo();
-        navVo.setMenuList(treeList);
+        navVo.setMenuList(menuList);
         navVo.setPermList(btnList);
         return navVo;
     }

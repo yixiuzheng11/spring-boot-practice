@@ -6,8 +6,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
 import org.yixz.entity.dto.SysMenuDto;
 import org.yixz.entity.mysql.SysMenu;
+import org.yixz.entity.vo.NavVo;
 import org.yixz.service.SysMenuService;
-
 import javax.annotation.Resource;
 
 /**
@@ -49,7 +49,7 @@ public class MenuController {
 
     @Operation(summary = "导航菜单那")
     @GetMapping("/getNav")
-    public void getNav() {
-        menuService.getNav();
+    public NavVo getNav() {
+        return menuService.getNav();
     }
 }

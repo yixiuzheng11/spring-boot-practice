@@ -5,20 +5,20 @@ package org.yixz.common.enums;
  * @date 2021年12月22日 14:46
  */
 public enum MenuTypeEnum {
-    DIR_TYPE(1, "目录"),
-    FUNC_TYPE(2, "菜单"),
-    BTN_TYPE(3, "按钮");
+    DIR_TYPE("node", "目录"),
+    FUNC_TYPE("menu", "菜单"),
+    BTN_TYPE("btn", "按钮");
 
-    private MenuTypeEnum(Integer code, String text) {
+    private MenuTypeEnum(String code, String text) {
         this.code = code;
         this.text = text;
     }
 
-    private Integer code;
+    private String code;
 
     private String text;
 
-    public Integer getCode() {
+    public String getCode() {
         return code;
     }
 
