@@ -100,12 +100,6 @@
             <artifactId>fastjson</artifactId>
             <version>${fastjson.version}</version>
         </dependency>
-        <!--引入sa-token-->
-        <dependency>
-            <groupId>cn.dev33</groupId>
-            <artifactId>sa-token-spring-boot-starter</artifactId>
-            <version>${sa.token.version}</version>
-        </dependency>
         <!--引入hutool-->
         <dependency>
             <groupId>cn.hutool</groupId>

@@ -1,6 +1,5 @@
 package org.yixz.service;
 
-import cn.dev33.satoken.stp.StpUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -68,7 +67,7 @@ public class SysMenuService extends ServiceImpl<SysMenuMapper, SysMenu> {
      * @return
      */
     public NavVo getNav() {
-        Integer userId = Integer.parseInt(StpUtil.getLoginId().toString());
+        Integer userId = null;
         if(userId==null) {
             return new NavVo();
         }
