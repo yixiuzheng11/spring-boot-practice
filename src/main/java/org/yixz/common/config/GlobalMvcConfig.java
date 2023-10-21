@@ -30,26 +30,14 @@ import java.time.format.DateTimeFormatter;
  */
 @Configuration
 public class GlobalMvcConfig implements WebMvcConfigurer {
-    /*
-    @Bean
-    public MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter() {
-        ObjectMapper objectMapper = new ObjectMapper();
-        SimpleModule simpleModule = new SimpleModule();
-        //解决long类型数据返回给前端精度丢失问题
-        simpleModule.addSerializer(Long.class, ToStringSerializer.instance);
-        simpleModule.addSerializer(Long.TYPE, ToStringSerializer.instance);
-        objectMapper.registerModule(simpleModule);
-        //将接收到参数转为对象时，参数中的某个属性在类中不存在时，不会报错
-        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        //日期格式
-        //objectMapper.setDateFormat(new SimpleDateFormat(DateUtils.dateTimeFormat));
-        JavaTimeModule javaTimeModule = new JavaTimeModule();
-        javaTimeModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(DateTimeFormatter.ofPattern(DateUtils.dateTimeFormat)));
-        javaTimeModule.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(DateTimeFormatter.ofPattern(DateUtils.dateTimeFormat)));
-        objectMapper.registerModule(javaTimeModule);
-        MappingJackson2HttpMessageConverter mappingJsonpHttpMessageConverter = new MappingJackson2HttpMessageConverter(objectMapper);
-        return mappingJsonpHttpMessageConverter;
-    }*/
+    @Resource
+    LoginInterceptor loginInterceptor;
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        //注册登录拦截器
+        registry.addInterceptor(loginInterceptor).addPathPatterns("/**");
+    }
 
     @Bean
     public ObjectMapper objectMapper() {
@@ -70,13 +58,5 @@ public class GlobalMvcConfig implements WebMvcConfigurer {
         javaTimeModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(DateTimeFormatter.ofPattern(DateUtils.dateTimeFormat)));
         objectMapper.registerModule(javaTimeModule);
         return objectMapper;
-    }
-
-    @Resource
-    LoginInterceptor loginInterceptor;
-
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(loginInterceptor).addPathPatterns("/**");
     }
 }
