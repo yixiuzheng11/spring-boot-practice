@@ -39,6 +39,10 @@ public class GlobalMvcConfig implements WebMvcConfigurer {
         registry.addInterceptor(loginInterceptor).addPathPatterns("/**");
     }
 
+    /**
+     * 返回数据格式处理
+     * @return
+     */
     @Bean
     public ObjectMapper objectMapper() {
         ObjectMapper objectMapper = new ObjectMapper();
