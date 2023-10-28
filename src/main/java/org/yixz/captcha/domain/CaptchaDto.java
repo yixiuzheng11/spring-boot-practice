@@ -1,25 +1,22 @@
-package org.yixz.entity.dto;
+package org.yixz.captcha.domain;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import javax.validation.constraints.NotBlank;
 
-
 /**
- * 描述
+ * 图形验证码 表单
  *
- * @author yixiuzheng11
- * @date 2021年07月22日 17:04
+ * @Author 1024创新实验室-主任: 卓大
+ * @Date 2021-09-02 20:21:10
+ * @Wechat zhuoda1024
+ * @Email lab1024@163.com
+ * @Copyright 1024创新实验室 （ https://1024lab.net ）
  */
+
 @Data
-@Schema(description = "登录请求参数")
-public class LoginDto {
-
-    @Schema(description = "账号")
-    private String userName;
-
-    @Schema(description = "密码")
-    private String password;
+@Schema(description = "CaptchaForm")
+public class CaptchaDto {
 
     @Schema(description = "验证码")
     @NotBlank(message = "验证码不能为空")

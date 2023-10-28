@@ -1,4 +1,4 @@
-package org.yixz.common.util;
+package org.yixz.common.constant;
 
 /**
  * 描述
@@ -6,7 +6,7 @@ package org.yixz.common.util;
  * @author yixiuzheng11
  * @date 2021年12月20日 18:14
  */
-public class SysConstants {
+public class SysConstant {
     //生成token时的salt
     public static String TOKEN_SALT = "spring-cloud-practice";
 

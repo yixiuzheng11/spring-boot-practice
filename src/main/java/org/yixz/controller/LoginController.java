@@ -3,13 +3,14 @@ package org.yixz.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.yixz.common.util.VerifyImgUtil;
+import org.yixz.captcha.CaptchaService;
+import org.yixz.captcha.domain.CaptchaVo;
 import org.yixz.entity.dto.LoginDto;
 import org.yixz.service.LoginService;
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * 描述
@@ -25,19 +26,19 @@ public class LoginController {
     @Resource
     private LoginService loginService;
 
-    @Resource
-    private VerifyImgUtil verifyImgUtil;
+    @Autowired
+    private CaptchaService captchaService;
 
     @Operation(summary = "登录")
     @PostMapping("/doLogin")
-    public String doLogin(@RequestBody LoginDto dto, HttpServletRequest request) {
+    public String doLogin(@Validated @RequestBody LoginDto dto) {
         //log.info("密码：{}", dto.getPwd());
-        return loginService.doLogin(dto, request);
+        return loginService.doLogin(dto);
     }
 
-    @Operation(summary = "生产二维码")
-    @GetMapping("/getVerifyCode")
-    public void getVerifyCode(HttpServletRequest request, HttpServletResponse response) {
-        verifyImgUtil.geneVerifyCode(request, response);
+    @Operation(summary = "获取图形验证码")
+    @GetMapping("/getCaptcha")
+    public CaptchaVo getCaptcha() {
+        return captchaService.generateCaptcha();
     }
 }

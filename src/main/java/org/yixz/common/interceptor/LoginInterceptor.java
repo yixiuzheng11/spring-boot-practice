@@ -5,6 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.util.AntPathMatcher;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -30,8 +31,10 @@ import java.util.List;
 @Component
 public class LoginInterceptor implements HandlerInterceptor {
 
-    private List<String> ignoreUrlList = Arrays.asList("/login/doLogin",
-        "/login/getVerifyCode"
+    private final AntPathMatcher pathMatcher = new AntPathMatcher();
+
+    private List<String> ignoreUrlList = Arrays.asList(
+            "/login/**"
     );
 
     /**
@@ -78,7 +81,7 @@ public class LoginInterceptor implements HandlerInterceptor {
             return false;
         }
         for (String ignoreUrl : ignores) {
-            if (uri.startsWith(ignoreUrl)) {
+            if (pathMatcher.match(ignoreUrl, uri)) {
                 return true;
             }
         }
