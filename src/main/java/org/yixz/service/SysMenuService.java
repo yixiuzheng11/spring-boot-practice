@@ -5,8 +5,10 @@ import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.yixz.common.enums.MenuTypeEnum;
+import org.yixz.common.util.UserUtil;
 import org.yixz.entity.dto.SysMenuDto;
 import org.yixz.entity.mysql.SysMenu;
+import org.yixz.entity.mysql.SysUser;
 import org.yixz.entity.vo.NavVo;
 import org.yixz.entity.vo.SysMenuVo;
 import org.yixz.mapper.SysMenuMapper;
@@ -67,20 +69,20 @@ public class SysMenuService extends ServiceImpl<SysMenuMapper, SysMenu> {
      * @return
      */
     public NavVo getNav() {
-        Integer userId = null;
-        if(userId==null) {
+        SysUser sysUser = UserUtil.getCurrentUser();
+        if(sysUser==null) {
             return new NavVo();
         }
-        List<SysMenuVo> menuVoList = baseMapper.getAuthMenu(userId);
+        List<SysMenuVo> menuVoList = baseMapper.getAuthMenu(sysUser.getId());
         //目录菜单
         List<SysMenuVo> menuList = menuVoList.stream().filter(item->!MenuTypeEnum.BTN_TYPE.equals(item.getMenuType())).collect(Collectors.toList());
-        //按钮
-        List<String> btnList = menuVoList.stream().filter(item->MenuTypeEnum.BTN_TYPE.equals(item.getMenuType())).map(item->item.getPerm()).collect(Collectors.toList());
+        //权限
+        List<String> permList = menuVoList.stream().map(item->item.getPerm()).collect(Collectors.toList());
         //生成树形结构
-        //List<SysMenuVo> treeList = generateTrees(menuList);
+        List<SysMenuVo> treeList = generateTrees(menuList);
         NavVo navVo = new NavVo();
-        navVo.setMenuList(menuList);
-        navVo.setPermList(btnList);
+        navVo.setMenuList(treeList);
+        navVo.setPermList(permList);
         return navVo;
     }
 
