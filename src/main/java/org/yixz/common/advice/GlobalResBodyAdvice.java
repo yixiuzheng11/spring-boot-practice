@@ -41,11 +41,7 @@ public class GlobalResBodyAdvice implements ResponseBodyAdvice<Object> {
             return body;
         }
         if(body instanceof String) {
-            Map<String, Object> map = new HashMap<>();
-            map.put("code", ResponseCode.SUCCESS.code);
-            map.put("msg", ResponseCode.SUCCESS.msg);
-            map.put("data", body);
-            return JSON.toJSONString(map);
+            return JSON.toJSONString(ResponseResult.success(body));
         }
         return ResponseResult.success(body);
     }
