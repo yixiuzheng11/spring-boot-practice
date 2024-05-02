@@ -33,7 +33,7 @@ public class RedisStreamConfig {
                         .batchSize(1)
                         // 设置了轮询超时的时间为100毫秒。这意味着当没有新的消息时，容器将每隔100毫秒进行一次轮询。
                         .pollTimeout(Duration.ofMillis(100))
-                        .executor(ThreadUtil.REDIS_STREAM_CONSUMER_EXCUTOR)
+                        .executor(ThreadUtil.POOL_TASK_EXCUTOR)
                         // 指定了消息的目标类型为 String。这意味着容器会将接收到的消息转换为 String 类型，以便在后续的处理中使用。
                         .targetType(String.class)
                         .build();

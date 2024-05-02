@@ -49,7 +49,7 @@ public class LoginInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         // OPTIONS请求直接return
-        if (HttpMethod.OPTIONS.toString().equals(request.getMethod())) {
+        /*if (HttpMethod.OPTIONS.toString().equals(request.getMethod())) {
             response.setStatus(HttpStatus.NO_CONTENT.value());
             return false;
         }
@@ -72,7 +72,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         if (StringUtils.isBlank(xAccessToken)) {
             this.outputResult(response, ResponseResult.error(ResponseCode.UNAUTHORIZED.code, ResponseCode.UNAUTHORIZED.msg));
             return false;
-        }
+        }*/
         return true;
     }
 

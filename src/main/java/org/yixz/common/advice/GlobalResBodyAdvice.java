@@ -33,15 +33,9 @@ public class GlobalResBodyAdvice implements ResponseBodyAdvice<Object> {
 
     @Override
     public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
-        if(body==null) {
-            return ResponseResult.success();
-        }
         // 防止重复包裹的问题出现
         if (body instanceof ResponseResult) {
             return body;
-        }
-        if(body instanceof String) {
-            return JSON.toJSONString(ResponseResult.success(body));
         }
         return ResponseResult.success(body);
     }
