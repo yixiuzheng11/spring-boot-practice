@@ -16,7 +16,7 @@ import org.yixz.common.util.ThreadUtil;
 
 import java.time.Duration;
 
-@Configuration
+//@Configuration
 @Slf4j
 public class RedisStreamConfig {
     @Autowired
