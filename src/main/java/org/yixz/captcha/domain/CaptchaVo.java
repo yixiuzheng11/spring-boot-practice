@@ -17,11 +17,11 @@ import lombok.Data;
 public class CaptchaVo {
 
     @Schema(description = "验证码唯一标识")
-    private String captchaUuid;
+    private String captchaKey;
 
     /*@Schema(description = "验证码图片内容-生产环境无效")
     private String captchaText;*/
 
     @Schema(description = "验证码Base64图片")
-    private String captchaImage;
+    private String captchaBase64;
 }

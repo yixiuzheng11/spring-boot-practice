@@ -1,5 +1,6 @@
 package org.yixz.controller;
 
+import com.alibaba.fastjson.JSON;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
@@ -20,9 +21,9 @@ import javax.annotation.Resource;
  */
 @Tag(name = "登录管理")
 @RestController
-@RequestMapping("/login")
+@RequestMapping("/auth")
 @Slf4j
-public class LoginController {
+public class AuthController {
     @Resource
     private LoginService loginService;
 
@@ -30,9 +31,9 @@ public class LoginController {
     private CaptchaService captchaService;
 
     @Operation(summary = "登录")
-    @PostMapping("/doLogin")
-    public String doLogin(@Validated @RequestBody LoginDto dto) {
-        //log.info("密码：{}", dto.getPwd());
+    @PostMapping("/login")
+    public String login(@Validated @RequestBody LoginDto dto) {
+        //log.info("登录信息----", JSON.toJSONString(dto));
         return loginService.doLogin(dto);
     }
 

@@ -27,5 +27,5 @@ public class LoginDto {
 
     @Schema(description = "验证码uuid标识")
     @NotBlank(message = "验证码uuid标识不能为空")
-    private String captchaUuid;
+    private String captchaKey;
 }

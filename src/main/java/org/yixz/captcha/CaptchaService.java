@@ -52,15 +52,14 @@ public class CaptchaService {
         String captchaText = defaultKaptcha.createText();
         BufferedImage image = defaultKaptcha.createImage(captchaText);
 
-        String base64Code;
+        String base64Code = null;
         try (ByteArrayOutputStream os = new ByteArrayOutputStream()) {
             ImageIO.write(image, "jpg", os);
             base64Code = Base64Utils.encodeToString(os.toByteArray());
         } catch (Exception e) {
-            log.error("generateCaptcha error:", e);
-            throw new BizException("生成验证码错误");
+            log.error("验证码生成失败", e);
         }
-
+        
         /**
          * 返回验证码对象
          * 图片 base64格式
@@ -68,8 +67,8 @@ public class CaptchaService {
         String uuid = UUID.randomUUID().toString().replace("-", "");
 
         CaptchaVo captchaVO = new CaptchaVo();
-        captchaVO.setCaptchaUuid(uuid);
-        captchaVO.setCaptchaImage("data:image/png;base64," + base64Code);
+        captchaVO.setCaptchaKey(uuid);
+        captchaVO.setCaptchaBase64("data:image/png;base64," + base64Code);
         String redisCaptchaKey = CAPTCHA + uuid;
         redisService.set(redisCaptchaKey, captchaText, EXPIRE_SECOND);
         return captchaVO;
@@ -82,11 +81,11 @@ public class CaptchaService {
      * @return
      */
     public boolean checkCaptcha(LoginDto captchaDto) {
-        if (StringUtils.isBlank(captchaDto.getCaptchaUuid()) || StringUtils.isBlank(captchaDto.getCaptchaCode())) {
+        if (StringUtils.isBlank(captchaDto.getCaptchaKey()) || StringUtils.isBlank(captchaDto.getCaptchaCode())) {
             return false;
         }
         //校验redis里的验证码
-        String redisCaptchaKey = CAPTCHA + captchaDto.getCaptchaUuid();
+        String redisCaptchaKey = CAPTCHA + captchaDto.getCaptchaKey();
         String redisCaptchaCode = (String) redisService.get(redisCaptchaKey);
         if (StringUtils.isBlank(redisCaptchaCode)) {
             return false;

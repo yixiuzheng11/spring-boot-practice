@@ -7,7 +7,7 @@ public enum ResponseCode {
     /**
      * 成功返回的状态码
      */
-    SUCCESS("SUCCESS", "操作成功"),
+    SUCCESS("00000", "操作成功"),
 
     ERROR("ERROR", "操作失败"),
 
