@@ -11,7 +11,7 @@ package org.yixz.common.constant;
  */
 public class RequestHeaderConst {
 
-    public static final String TOKEN = "token";
+    public static final String TOKEN = "accessToken";
 
     public static final String USER_AGENT = "user-agent";
 

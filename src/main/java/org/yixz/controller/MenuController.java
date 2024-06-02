@@ -46,10 +46,4 @@ public class MenuController {
     public void delete(@RequestBody SysMenuDto dto) {
         menuService.delete(dto.getId());
     }
-
-    @Operation(summary = "导航菜单那")
-    @GetMapping("/getNav")
-    public NavVo getNav() {
-        return menuService.getNav();
-    }
 }

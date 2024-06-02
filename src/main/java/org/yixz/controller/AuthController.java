@@ -1,6 +1,5 @@
 package org.yixz.controller;
 
-import com.alibaba.fastjson.JSON;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.yixz.captcha.CaptchaService;
 import org.yixz.captcha.domain.CaptchaVo;
 import org.yixz.entity.dto.LoginDto;
+import org.yixz.entity.vo.LoginVo;
 import org.yixz.service.LoginService;
 import javax.annotation.Resource;
 
@@ -32,7 +32,7 @@ public class AuthController {
 
     @Operation(summary = "登录")
     @PostMapping("/login")
-    public String login(@Validated @RequestBody LoginDto dto) {
+    public LoginVo login(@Validated @RequestBody LoginDto dto) {
         //log.info("登录信息----", JSON.toJSONString(dto));
         return loginService.doLogin(dto);
     }
@@ -41,5 +41,11 @@ public class AuthController {
     @GetMapping("/getCaptcha")
     public CaptchaVo getCaptcha() {
         return captchaService.generateCaptcha();
+    }
+
+    @Operation(summary = "获取用户登录信息")
+    @GetMapping("/getLoginInfo")
+    public LoginVo getLoginInfo() {
+        return loginService.getLoginInfo();
     }
 }

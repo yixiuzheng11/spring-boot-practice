@@ -3,7 +3,7 @@
 <mapper namespace="org.yixz.mapper.SysMenuMapper">
 
     <select id="getAuthMenu" resultType="org.yixz.entity.vo.SysMenuVo">
-        select d.id, d.name, d.menu_type, d.parent_id, d.icon, d.url, d.perm, d.sort_no
+        select d.id, d.name, d.type, d.parent_id, d.route, d.url, d.icon, d.permission, d.sort_no
         from sys_user a inner join sys_user_role b on a.id=b.user_id
                         inner join sys_role_menu c on b.role_id =c.role_id
                         inner join sys_menu d on c.menu_id = d.id

@@ -9,8 +9,10 @@ import org.springframework.stereotype.Service;
 import org.yixz.captcha.CaptchaService;
 import org.yixz.common.constant.JwtConst;
 import org.yixz.common.exception.BizException;
+import org.yixz.common.util.UserUtil;
 import org.yixz.entity.dto.LoginDto;
 import org.yixz.entity.mysql.SysUser;
+import org.yixz.entity.vo.LoginVo;
 import javax.annotation.Resource;
 import java.util.Date;
 
@@ -35,12 +37,19 @@ public class LoginService {
      * @param loginDto
      * @return
      */
-    public String doLogin(LoginDto loginDto) {
+    public LoginVo doLogin(LoginDto loginDto) {
         SysUser sysUser = checkLogin(loginDto);
         if(sysUser==null) {
-            throw new BizException("账号密码错误");
+            throw new BizException("账号或密码错误");
         }
-        return generateToken(sysUser);
+        LoginVo loginVo = new LoginVo();
+        loginVo.setUserId(sysUser.getId());
+        loginVo.setUsername(sysUser.getUserName());
+        loginVo.setNickname(sysUser.getFullName());
+        //loginVo.setAvatar();
+        String accessToken = generateToken(sysUser);
+        loginVo.setAccessToken(accessToken);
+        return loginVo;
     }
 
     /**
@@ -92,5 +101,14 @@ public class LoginService {
         jwtBuilder.setExpiration(new Date(nowTimeMilli + tokenExpire * HOUR_TIME_MILLI));
         String token = jwtBuilder.compact();
         return token;
+    }
+
+    public LoginVo getLoginInfo() {
+        SysUser sysUser = UserUtil.getCurrentUser();
+        LoginVo loginVo = new LoginVo();
+        loginVo.setUserId(sysUser.getId());
+        loginVo.setUsername(sysUser.getUserName());
+        loginVo.setNickname(sysUser.getFullName());
+        return loginVo;
     }
 }
