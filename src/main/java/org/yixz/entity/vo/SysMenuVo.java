@@ -23,18 +23,18 @@ public class SysMenuVo {
     private String name;
 
     @Schema(description = "路由")
-    private String route;
+    private String path;
 
     @Schema(description = "菜单图标")
     private String icon;
 
-    @Schema(description = "菜单路径")
-    private String url;
+    @Schema(description = "组件路径")
+    private String component;
 
     @Schema(description = "授权")
     private String permission;
 
-    @Schema(description = "菜单类型，node-目录，menu-菜单，btn-按钮")
+    @Schema(description = "菜单类型，CATALOG-目录，MENU-菜单，BTN-按钮")
     private String type;
 
     @Schema(description = "排序")

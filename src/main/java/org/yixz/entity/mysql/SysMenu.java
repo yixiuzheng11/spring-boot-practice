@@ -8,6 +8,8 @@ import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -30,6 +32,11 @@ public class SysMenu {
     private Integer id;
 
     /**
+     * 父菜单id
+     */
+    private Integer parentId;
+
+    /**
      * 菜单名称
      */
     private String name;
@@ -37,12 +44,16 @@ public class SysMenu {
     /**
      * 菜单类型，button-按钮，directory-目录，menu-菜单
      */
-    private String menuType;
+    private String type;
+
+    @Schema(description = "路由地址")
+    private String route;
 
     /**
-     * 父菜单id
+     * 路由
      */
-    private Integer parentId;
+    @Schema(description = "组件地址")
+    private String url;
 
     /**
      * 图标
@@ -50,47 +61,13 @@ public class SysMenu {
     private String icon;
 
     /**
-     * 路由
-     */
-    private String url;
-
-    /**
      * 权限
      */
-    private String perm;
+    private String permission;
 
     /**
      * 排序
      */
     private Integer sortNo;
-
-    /**
-     * 状态，1-有效，0-无效
-     */
-    private Integer dataStatus;
-
-    /**
-     * 创建时间
-     */
-    @TableField(fill = FieldFill.INSERT)
-    private LocalDateTime createdDate;
-
-    /**
-     * 更新时间
-     */
-    @TableField(fill = FieldFill.INSERT_UPDATE)
-    private LocalDateTime updatedDate;
-
-    /**
-     * 创建人员
-     */
-    @TableField(fill = FieldFill.INSERT)
-    private String createdBy;
-
-    /**
-     * 更新人员
-     */
-    @TableField(fill = FieldFill.INSERT_UPDATE)
-    private String updatedBy;
 
 }

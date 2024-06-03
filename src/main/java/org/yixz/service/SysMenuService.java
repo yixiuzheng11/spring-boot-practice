@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.google.common.collect.Lists;
 import org.yixz.common.enums.MenuTypeEnum;
 import org.yixz.common.util.UserUtil;
 import org.yixz.entity.dto.SysMenuDto;
@@ -40,7 +41,7 @@ public class SysMenuService extends ServiceImpl<SysMenuMapper, SysMenu> {
         LambdaQueryWrapper<SysMenu> queryWrapper = Wrappers.lambdaQuery(SysMenu.class);
         queryWrapper.eq(dto.getParentId()!=null, SysMenu::getParentId, dto.getParentId());
         queryWrapper.eq(StringUtils.isNotEmpty(dto.getUrl()), SysMenu::getUrl, dto.getUrl());
-        queryWrapper.eq(StringUtils.isNotEmpty(dto.getMenuType()), SysMenu::getMenuType, dto.getMenuType());
+        queryWrapper.eq(StringUtils.isNotEmpty(dto.getMenuType()), SysMenu::getType, dto.getMenuType());
         queryWrapper.like(StringUtils.isNotEmpty(dto.getName()), SysMenu::getName, dto.getName());
         return baseMapper.selectPage(page, queryWrapper);
     }
@@ -70,22 +71,29 @@ public class SysMenuService extends ServiceImpl<SysMenuMapper, SysMenu> {
      * 获取导航菜单
      * @return
      */
-    public NavVo getNav() {
+    public List<SysMenuVo> getMenuList(SysMenuDto dto) {
+        List<SysMenu> menuList = this.getAuthMenus();
+        //目录菜单
+        List<SysMenu> filterMenuList = menuList.stream().filter(item->!MenuTypeEnum.BTN.equals(item.getType())).collect(Collectors.toList());
+        //生成树形结构
+        List<SysMenuVo> menuVoList = generateTrees(filterMenuList);
+        return menuVoList;
+    }
+
+    public List<SysMenu> getAuthMenus() {
         SysUser sysUser = UserUtil.getCurrentUser();
         if(sysUser==null) {
-            return new NavVo();
+            return new ArrayList<>();
         }
-        List<SysMenuVo> menuVoList = baseMapper.getAuthMenu(sysUser.getId());
-        //目录菜单
-        List<SysMenuVo> menuList = menuVoList.stream().filter(item->!MenuTypeEnum.BTN_TYPE.equals(item.getType())).collect(Collectors.toList());
-        //权限
-        List<String> permList = menuVoList.stream().map(item->item.getPermission()).collect(Collectors.toList());
-        //生成树形结构
-        List<SysMenuVo> treeList = generateTrees(menuList);
-        NavVo navVo = new NavVo();
-        navVo.setMenuList(treeList);
-        navVo.setPermList(permList);
-        return navVo;
+        List<SysMenu> menuList = null;
+        if(sysUser.getId().equals(1)){
+            menuList = baseMapper.selectList(Wrappers.lambdaQuery(SysMenu.class)
+                    .in(SysMenu::getType, Lists.newArrayList(MenuTypeEnum.MENU.getCode(), MenuTypeEnum.CATALOG.getCode()))
+            );
+        }else {
+            menuList = baseMapper.getAuthMenus(sysUser.getId());
+        }
+        return menuList;
     }
 
     /**
@@ -94,36 +102,33 @@ public class SysMenuService extends ServiceImpl<SysMenuMapper, SysMenu> {
      * @param nodes 树形节点列表
      * @return 树形结构列表
      */
-    public  List<SysMenuVo> generateTrees(List<SysMenuVo> nodes) {
+    public  List<SysMenuVo> generateTrees(List<SysMenu> nodes) {
         List<SysMenuVo> roots = new ArrayList<>();
-        for (Iterator<SysMenuVo> ite = nodes.iterator(); ite.hasNext(); ) {
-            SysMenuVo node = ite.next();
+        for (Iterator<SysMenu> ite = nodes.iterator(); ite.hasNext(); ) {
+            SysMenu node = ite.next();
             if (node.getParentId()==null || node.getParentId()==0) {
-                roots.add(node);
+                SysMenuVo sysMenuVo = menuToVo(node);
+                roots.add(sysMenuVo);
                 // 从所有节点列表中删除该节点，以免后续重复遍历该节点
                 ite.remove();
             }
         }
-
         roots.forEach(r -> {
             setChildren(r, nodes);
         });
         return roots;
     }
 
-    public void setChildren(SysMenuVo parent, List<SysMenuVo> nodes) {
+    public void setChildren(SysMenuVo parent, List<SysMenu> nodes) {
         List<SysMenuVo> children = new ArrayList<>();
-        for (Iterator<SysMenuVo> ite = nodes.iterator(); ite.hasNext(); ) {
-            SysMenuVo node = ite.next();
+        for (Iterator<SysMenu> ite = nodes.iterator(); ite.hasNext(); ) {
+            SysMenu node = ite.next();
             if (Objects.equals(node.getParentId(), parent.getId())) {
-                children.add(node);
+                SysMenuVo sysMenuVo = menuToVo(node);
+                children.add(sysMenuVo);
                 // 从所有节点列表中删除该节点，以免后续重复遍历该节点
                 ite.remove();
             }
-        }
-        // 如果孩子为空，则直接返回,否则继续递归设置孩子的孩子
-        if (children.isEmpty()) {
-            return;
         }
         parent.setChildren(children);
         children.forEach(m -> {
@@ -137,13 +142,13 @@ public class SysMenuService extends ServiceImpl<SysMenuMapper, SysMenu> {
         if(sysUser==null) {
             return new RouteVo();
         }
-        List<SysMenuVo> menuVoList = baseMapper.getAuthMenu(sysUser.getId());
+        List<SysMenu> menuList = this.getAuthMenus();
         //目录菜单
-        List<SysMenuVo> menuList = menuVoList.stream().filter(item->!MenuTypeEnum.BTN_TYPE.equals(item.getType())).collect(Collectors.toList());
+        List<SysMenu> filterMenuList = menuList.stream().filter(item->!MenuTypeEnum.BTN.equals(item.getType())).collect(Collectors.toList());
         //权限
-        List<String> permList = menuVoList.stream().map(item->item.getPermission()).collect(Collectors.toList());
+        List<String> permList = filterMenuList.stream().map(item->item.getPermission()).collect(Collectors.toList());
         //生成树形结构
-        List<MenuRouteVo> treeList = generateRouteTrees(menuList);
+        List<MenuRouteVo> treeList = generateRouteTrees(filterMenuList);
         RouteVo vo = new RouteVo();
         vo.setMenuList(treeList);
         vo.setPermList(permList);
@@ -156,10 +161,10 @@ public class SysMenuService extends ServiceImpl<SysMenuMapper, SysMenu> {
      * @param nodes 树形节点列表
      * @return 树形结构列表
      */
-    public  List<MenuRouteVo> generateRouteTrees(List<SysMenuVo> nodes) {
+    public  List<MenuRouteVo> generateRouteTrees(List<SysMenu> nodes) {
         List<MenuRouteVo> roots = new ArrayList<>();
-        for (Iterator<SysMenuVo> ite = nodes.iterator(); ite.hasNext(); ) {
-            SysMenuVo node = ite.next();
+        for (Iterator<SysMenu> ite = nodes.iterator(); ite.hasNext(); ) {
+            SysMenu node = ite.next();
             if (node.getParentId()==null || node.getParentId()==0) {
                 MenuRouteVo dataVo = menuToRoute(node);
                 roots.add(dataVo);
@@ -173,10 +178,10 @@ public class SysMenuService extends ServiceImpl<SysMenuMapper, SysMenu> {
         return roots;
     }
 
-    public void setRouteChildren(MenuRouteVo parent, List<SysMenuVo> nodes) {
+    public void setRouteChildren(MenuRouteVo parent, List<SysMenu> nodes) {
         List<MenuRouteVo> children = new ArrayList<>();
-        for (Iterator<SysMenuVo> ite = nodes.iterator(); ite.hasNext(); ) {
-            SysMenuVo node = ite.next();
+        for (Iterator<SysMenu> ite = nodes.iterator(); ite.hasNext(); ) {
+            SysMenu node = ite.next();
             if (Objects.equals(node.getParentId(), parent.getId())) {
                 MenuRouteVo dataVo = menuToRoute(node);
                 children.add(dataVo);
@@ -191,17 +196,29 @@ public class SysMenuService extends ServiceImpl<SysMenuMapper, SysMenu> {
         });
     }
 
-    public MenuRouteVo menuToRoute(SysMenuVo menuVo) {
+    public SysMenuVo menuToVo(SysMenu sysMenu) {
+        SysMenuVo menuVo = new SysMenuVo();
+        menuVo.setId(sysMenu.getId());
+        menuVo.setParentId(sysMenu.getParentId());
+        menuVo.setName(sysMenu.getName());
+        menuVo.setPath(sysMenu.getRoute());
+        menuVo.setComponent(sysMenu.getUrl());
+        menuVo.setType(sysMenu.getType());
+        menuVo.setIcon(sysMenu.getIcon());
+        return menuVo;
+    }
+
+    public MenuRouteVo menuToRoute(SysMenu sysMenu) {
         MenuRouteVo routeVo = new MenuRouteVo();
-        routeVo.setId(menuVo.getId());
-        routeVo.setName(menuVo.getRoute());
-        routeVo.setPath(menuVo.getRoute());
-        routeVo.setComponent(menuVo.getUrl());
+        routeVo.setId(sysMenu.getId());
+        routeVo.setName(sysMenu.getRoute());
+        routeVo.setPath(sysMenu.getRoute());
+        routeVo.setComponent(sysMenu.getUrl());
         MenuRouteVo.MenuRouteMeta meta = new MenuRouteVo.MenuRouteMeta();
-        meta.setPermission(menuVo.getPermission());
-        meta.setTitle(menuVo.getName());
-        meta.setIcon(menuVo.getIcon());
-        meta.setSortNo(menuVo.getSortNo());
+        meta.setPermission(sysMenu.getPermission());
+        meta.setTitle(sysMenu.getName());
+        meta.setIcon(sysMenu.getIcon());
+        meta.setSortNo(sysMenu.getSortNo());
         routeVo.setMeta(meta);
         return routeVo;
     }

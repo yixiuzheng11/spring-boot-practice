@@ -1,14 +1,13 @@
 package org.yixz.controller;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
 import org.yixz.entity.dto.SysMenuDto;
-import org.yixz.entity.mysql.SysMenu;
-import org.yixz.entity.vo.NavVo;
+import org.yixz.entity.vo.SysMenuVo;
 import org.yixz.service.SysMenuService;
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * 描述
@@ -18,15 +17,15 @@ import javax.annotation.Resource;
  */
 @Tag(name = "菜单管理")
 @RestController
-@RequestMapping("/sys/menu")
+@RequestMapping("/menu")
 public class MenuController {
     @Resource
     private SysMenuService menuService;
 
-    @Operation(summary = "菜单分页查询")
-    @PostMapping("/getPage")
-    public Page<SysMenu> getPage(@RequestBody SysMenuDto dto) {
-        return menuService.getPage(dto);
+    @Operation(summary = "菜单查询")
+    @PostMapping("/getMenuList")
+    public List<SysMenuVo> getMenuList(@RequestBody SysMenuDto dto) {
+        return menuService.getMenuList(dto);
     }
 
     @Operation(summary = "菜单新增")
