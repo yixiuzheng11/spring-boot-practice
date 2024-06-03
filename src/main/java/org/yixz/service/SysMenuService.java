@@ -9,8 +9,8 @@ import org.yixz.common.util.UserUtil;
 import org.yixz.entity.dto.SysMenuDto;
 import org.yixz.entity.mysql.SysMenu;
 import org.yixz.entity.mysql.SysUser;
-import org.yixz.entity.vo.MenuRouteDataVo;
 import org.yixz.entity.vo.MenuRouteVo;
+import org.yixz.entity.vo.RouteVo;
 import org.yixz.entity.vo.NavVo;
 import org.yixz.entity.vo.SysMenuVo;
 import org.yixz.mapper.SysMenuMapper;
@@ -132,10 +132,10 @@ public class SysMenuService extends ServiceImpl<SysMenuMapper, SysMenu> {
         });
     }
 
-    public MenuRouteVo getMenuRoute() {
+    public RouteVo getMenuRoute() {
         SysUser sysUser = UserUtil.getCurrentUser();
         if(sysUser==null) {
-            return new MenuRouteVo();
+            return new RouteVo();
         }
         List<SysMenuVo> menuVoList = baseMapper.getAuthMenu(sysUser.getId());
         //目录菜单
@@ -143,8 +143,8 @@ public class SysMenuService extends ServiceImpl<SysMenuMapper, SysMenu> {
         //权限
         List<String> permList = menuVoList.stream().map(item->item.getPermission()).collect(Collectors.toList());
         //生成树形结构
-        List<MenuRouteDataVo> treeList = generateRouteTrees(menuList);
-        MenuRouteVo vo = new MenuRouteVo();
+        List<MenuRouteVo> treeList = generateRouteTrees(menuList);
+        RouteVo vo = new RouteVo();
         vo.setMenuList(treeList);
         vo.setPermList(permList);
         return vo;
@@ -156,38 +156,33 @@ public class SysMenuService extends ServiceImpl<SysMenuMapper, SysMenu> {
      * @param nodes 树形节点列表
      * @return 树形结构列表
      */
-    public  List<MenuRouteDataVo> generateRouteTrees(List<SysMenuVo> nodes) {
-        List<MenuRouteDataVo> roots = new ArrayList<>();
+    public  List<MenuRouteVo> generateRouteTrees(List<SysMenuVo> nodes) {
+        List<MenuRouteVo> roots = new ArrayList<>();
         for (Iterator<SysMenuVo> ite = nodes.iterator(); ite.hasNext(); ) {
             SysMenuVo node = ite.next();
             if (node.getParentId()==null || node.getParentId()==0) {
-                MenuRouteDataVo dataVo = menuToRoute(node);
+                MenuRouteVo dataVo = menuToRoute(node);
                 roots.add(dataVo);
                 // 从所有节点列表中删除该节点，以免后续重复遍历该节点
                 ite.remove();
             }
         }
-
         roots.forEach(r -> {
             setRouteChildren(r, nodes);
         });
         return roots;
     }
 
-    public void setRouteChildren(MenuRouteDataVo parent, List<SysMenuVo> nodes) {
-        List<MenuRouteDataVo> children = new ArrayList<>();
+    public void setRouteChildren(MenuRouteVo parent, List<SysMenuVo> nodes) {
+        List<MenuRouteVo> children = new ArrayList<>();
         for (Iterator<SysMenuVo> ite = nodes.iterator(); ite.hasNext(); ) {
             SysMenuVo node = ite.next();
             if (Objects.equals(node.getParentId(), parent.getId())) {
-                MenuRouteDataVo dataVo = menuToRoute(node);
+                MenuRouteVo dataVo = menuToRoute(node);
                 children.add(dataVo);
                 // 从所有节点列表中删除该节点，以免后续重复遍历该节点
                 ite.remove();
             }
-        }
-        // 如果孩子为空，则直接返回,否则继续递归设置孩子的孩子
-        if (children.isEmpty()) {
-            return;
         }
         parent.setChildren(children);
         children.forEach(m -> {
@@ -196,13 +191,13 @@ public class SysMenuService extends ServiceImpl<SysMenuMapper, SysMenu> {
         });
     }
 
-    public MenuRouteDataVo menuToRoute(SysMenuVo menuVo) {
-        MenuRouteDataVo routeVo = new MenuRouteDataVo();
+    public MenuRouteVo menuToRoute(SysMenuVo menuVo) {
+        MenuRouteVo routeVo = new MenuRouteVo();
         routeVo.setId(menuVo.getId());
         routeVo.setName(menuVo.getRoute());
         routeVo.setPath(menuVo.getRoute());
         routeVo.setComponent(menuVo.getUrl());
-        MenuRouteDataVo.MenuRouteMeta meta = new MenuRouteDataVo.MenuRouteMeta();
+        MenuRouteVo.MenuRouteMeta meta = new MenuRouteVo.MenuRouteMeta();
         meta.setPermission(menuVo.getPermission());
         meta.setTitle(menuVo.getName());
         meta.setIcon(menuVo.getIcon());

@@ -42,10 +42,4 @@ public class AuthController {
     public CaptchaVo getCaptcha() {
         return captchaService.generateCaptcha();
     }
-
-    @Operation(summary = "获取用户登录信息")
-    @GetMapping("/getLoginInfo")
-    public LoginVo getLoginInfo() {
-        return loginService.getLoginInfo();
-    }
 }

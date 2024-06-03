@@ -13,9 +13,41 @@ import java.util.List;
 @Data
 @Schema(description = "MenuRouteVo")
 public class MenuRouteVo {
-    @Schema(description = "菜单")
-    private List<MenuRouteDataVo> menuList;
+    @Schema(description = "菜单id")
+    private Integer id;
 
-    @Schema(description = "按钮权限")
-    private List<String> permList;
+    @Schema(description = "路由名称")
+    private String name;
+
+    @Schema(description = "路由地址")
+    private String path;
+
+    @Schema(description = "组件地址")
+    private String component;
+
+    /*@Schema(description = "菜单类型，menu-菜单，func-功能，btn-按钮")
+    private String type;*/
+
+    @Schema(description = "子菜单")
+    private List<MenuRouteVo> children;
+
+    private MenuRouteMeta meta;
+
+    @Data
+    public static class MenuRouteMeta {
+        @Schema(description = "菜单名称")
+        private String title;
+
+        @Schema(description = "菜单图标")
+        private String icon;
+
+        @Schema(description = "授权")
+        private String permission;
+
+        @Schema(description = "是否隐藏")
+        private Boolean hidden = false;
+
+        @Schema(description = "排序")
+        private Integer sortNo;
+    }
 }

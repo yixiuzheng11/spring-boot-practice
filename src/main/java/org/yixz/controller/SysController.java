@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import org.yixz.entity.vo.LoginVo;
-import org.yixz.entity.vo.MenuRouteVo;
+import org.yixz.entity.vo.RouteVo;
 import org.yixz.service.LoginService;
 import org.yixz.service.SysMenuService;
 import javax.annotation.Resource;
@@ -35,7 +35,7 @@ public class SysController {
 
     @Operation(summary = "导航菜单")
     @GetMapping("/getMenuRoute")
-    public MenuRouteVo getMenuRoute() {
+    public RouteVo getMenuRoute() {
         return menuService.getMenuRoute();
     }
 }
