@@ -12,7 +12,6 @@ import org.yixz.entity.mysql.SysMenu;
 import org.yixz.entity.mysql.SysUser;
 import org.yixz.entity.vo.MenuRouteVo;
 import org.yixz.entity.vo.RouteVo;
-import org.yixz.entity.vo.NavVo;
 import org.yixz.entity.vo.SysMenuVo;
 import org.yixz.mapper.SysMenuMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
