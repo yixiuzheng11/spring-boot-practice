@@ -30,4 +30,6 @@ public class SysMenuDto extends BaseDto{
     @Schema(description = "权限")
     private String perm;
 
+    @Schema(description = "用户id")
+    private Integer userId;
 }

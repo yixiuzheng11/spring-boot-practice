@@ -23,7 +23,7 @@ import javax.annotation.Resource;
 @RestController
 @RequestMapping("/auth")
 @Slf4j
-public class AuthController {
+public class LoginController {
     @Resource
     private LoginService loginService;
 

@@ -40,6 +40,9 @@ public class SysMenuVo {
     @Schema(description = "排序")
     private Integer sortNo;
 
+    @Schema(description = "1-可见，0-隐藏")
+    private Integer visible = 1;
+
     @Schema(description = "子菜单")
     private List<SysMenuVo> children;
 }

@@ -72,26 +72,28 @@ public class SysMenuService extends ServiceImpl<SysMenuMapper, SysMenu> {
      * @return
      */
     public List<SysMenuVo> getMenuList(SysMenuDto dto) {
-        List<SysMenu> menuList = this.getAuthMenus();
+        List<SysMenu> menuList = this.getAuthMenus(dto);
         //目录菜单
-        List<SysMenu> filterMenuList = menuList.stream().filter(item->!MenuTypeEnum.BTN.equals(item.getType())).collect(Collectors.toList());
+        List<SysMenu> filterMenuList = menuList.stream().filter(item->!MenuTypeEnum.BUTTON.equals(item.getType())).collect(Collectors.toList());
         //生成树形结构
         List<SysMenuVo> menuVoList = generateTrees(filterMenuList);
         return menuVoList;
     }
 
-    public List<SysMenu> getAuthMenus() {
+    public List<SysMenu> getAuthMenus(SysMenuDto dto) {
         SysUser sysUser = UserUtil.getCurrentUser();
         if(sysUser==null) {
             return new ArrayList<>();
         }
+        dto.setUserId(sysUser.getId());
         List<SysMenu> menuList = null;
+        //超管查全部
         if(sysUser.getId().equals(1)){
             menuList = baseMapper.selectList(Wrappers.lambdaQuery(SysMenu.class)
                     .in(SysMenu::getType, Lists.newArrayList(MenuTypeEnum.MENU.getCode(), MenuTypeEnum.CATALOG.getCode()))
             );
         }else {
-            menuList = baseMapper.getAuthMenus(sysUser.getId());
+            menuList = baseMapper.getAuthMenus(dto);
         }
         return menuList;
     }
@@ -142,9 +144,11 @@ public class SysMenuService extends ServiceImpl<SysMenuMapper, SysMenu> {
         if(sysUser==null) {
             return new RouteVo();
         }
-        List<SysMenu> menuList = this.getAuthMenus();
+        SysMenuDto dto = new SysMenuDto();
+        dto.setUserId(sysUser.getId());
+        List<SysMenu> menuList = this.getAuthMenus(dto);
         //目录菜单
-        List<SysMenu> filterMenuList = menuList.stream().filter(item->!MenuTypeEnum.BTN.equals(item.getType())).collect(Collectors.toList());
+        List<SysMenu> filterMenuList = menuList.stream().filter(item->!MenuTypeEnum.BUTTON.equals(item.getType())).collect(Collectors.toList());
         //权限
         List<String> permList = filterMenuList.stream().map(item->item.getPermission()).collect(Collectors.toList());
         //生成树形结构
@@ -205,6 +209,7 @@ public class SysMenuService extends ServiceImpl<SysMenuMapper, SysMenu> {
         menuVo.setComponent(sysMenu.getUrl());
         menuVo.setType(sysMenu.getType());
         menuVo.setIcon(sysMenu.getIcon());
+        menuVo.setSortNo(sysMenu.getSortNo());
         return menuVo;
     }
 

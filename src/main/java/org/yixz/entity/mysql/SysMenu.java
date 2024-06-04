@@ -41,9 +41,7 @@ public class SysMenu {
      */
     private String name;
 
-    /**
-     * 菜单类型，button-按钮，directory-目录，menu-菜单
-     */
+    @Schema(description = "菜单类型，CATALOG-目录，MENU-菜单，BTN-按钮")
     private String type;
 
     @Schema(description = "路由地址")

@@ -7,9 +7,9 @@ package org.yixz.common.enums;
 public enum MenuTypeEnum {
     CATALOG("CATALOG", "目录"),
     MENU("MENU", "菜单"),
-    BTN("BTN", "按钮");
+    BUTTON("BUTTON", "按钮");
 
-    private MenuTypeEnum(String code, String text) {
+    MenuTypeEnum(String code, String text) {
         this.code = code;
         this.text = text;
     }

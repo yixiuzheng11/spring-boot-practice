@@ -23,8 +23,8 @@ public class MenuController {
     private SysMenuService menuService;
 
     @Operation(summary = "菜单查询")
-    @PostMapping("/getMenuList")
-    public List<SysMenuVo> getMenuList(@RequestBody SysMenuDto dto) {
+    @PostMapping("/getList")
+    public List<SysMenuVo> getList(@RequestBody SysMenuDto dto) {
         return menuService.getMenuList(dto);
     }
 

@@ -1,6 +1,7 @@
 package org.yixz.mapper;
 
 import org.apache.ibatis.annotations.Param;
+import org.yixz.entity.dto.SysMenuDto;
 import org.yixz.entity.mysql.SysMenu;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.yixz.entity.vo.SysMenuVo;
@@ -17,5 +18,5 @@ import java.util.List;
  */
 public interface SysMenuMapper extends BaseMapper<SysMenu> {
 
-    List<SysMenu> getAuthMenus(@Param("userId") Integer userId);
+    List<SysMenu> getAuthMenus(@Param("dto") SysMenuDto dto);
 }
