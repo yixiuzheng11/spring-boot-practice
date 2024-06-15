@@ -18,10 +18,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -34,6 +31,9 @@ import java.util.stream.Collectors;
  */
 @Service
 public class SysMenuService extends ServiceImpl<SysMenuMapper, SysMenu> {
+
+    //根节点id
+    private static Integer rootId = 0;
 
     public Page<SysMenu> getPage(SysMenuDto dto) {
         Page page = new Page(dto.getPageNum(), dto.getPageSize());
@@ -104,38 +104,31 @@ public class SysMenuService extends ServiceImpl<SysMenuMapper, SysMenu> {
      * @return 树形结构列表
      */
     public  List<SysMenuVo> generateTrees(List<SysMenu> nodes) {
-        List<SysMenuVo> roots = new ArrayList<>();
-        for (Iterator<SysMenu> ite = nodes.iterator(); ite.hasNext(); ) {
-            SysMenu node = ite.next();
-            if (node.getParentId()==null || node.getParentId()==0) {
-                SysMenuVo sysMenuVo = menuToVo(node);
-                roots.add(sysMenuVo);
-                // 从所有节点列表中删除该节点，以免后续重复遍历该节点
-                ite.remove();
-            }
+        if (nodes == null || nodes.isEmpty()) {
+            return new ArrayList<>();
         }
-        roots.forEach(r -> {
-            setChildren(r, nodes);
-        });
+        // 使用HashMap存储节点，以提高查找效率
+        Map<Integer, List<SysMenuVo>> voMap = nodes.stream().map(node->menuToVo(node))
+                .collect(Collectors.groupingBy(SysMenuVo::getParentId,
+                        HashMap::new,
+                        Collectors.collectingAndThen(
+                                Collectors.toList(),
+                                //正序
+                                list -> list.stream().sorted(Comparator.comparing(SysMenuVo::getSortNo)).collect(Collectors.toList())
+                        )
+                ));
+        //根节点
+        List<SysMenuVo> roots = voMap.getOrDefault(rootId, new ArrayList<>());
+        //设置子节点
+        roots.forEach(node->setChildren(node, voMap));
         return roots;
     }
 
-    public void setChildren(SysMenuVo parent, List<SysMenu> nodes) {
-        List<SysMenuVo> children = new ArrayList<>();
-        for (Iterator<SysMenu> ite = nodes.iterator(); ite.hasNext(); ) {
-            SysMenu node = ite.next();
-            if (Objects.equals(node.getParentId(), parent.getId())) {
-                SysMenuVo sysMenuVo = menuToVo(node);
-                children.add(sysMenuVo);
-                // 从所有节点列表中删除该节点，以免后续重复遍历该节点
-                ite.remove();
-            }
-        }
+    private void setChildren(SysMenuVo parent, Map<Integer, List<SysMenuVo>> voMap) {
+        //子节点
+        List<SysMenuVo> children = voMap.getOrDefault(parent.getId(), new ArrayList<>());
         parent.setChildren(children);
-        children.forEach(m -> {
-            // 递归设置子节点
-            setChildren(m, nodes);
-        });
+        children.forEach(m -> setChildren(m, voMap));
     }
 
     public RouteVo getMenuRoute() {
@@ -165,38 +158,24 @@ public class SysMenuService extends ServiceImpl<SysMenuMapper, SysMenu> {
      * @return 树形结构列表
      */
     public  List<MenuRouteVo> generateRouteTrees(List<SysMenu> nodes) {
-        List<MenuRouteVo> roots = new ArrayList<>();
-        for (Iterator<SysMenu> ite = nodes.iterator(); ite.hasNext(); ) {
-            SysMenu node = ite.next();
-            if (node.getParentId()==null || node.getParentId()==0) {
-                MenuRouteVo dataVo = menuToRoute(node);
-                roots.add(dataVo);
-                // 从所有节点列表中删除该节点，以免后续重复遍历该节点
-                ite.remove();
-            }
+        if (nodes == null || nodes.isEmpty()) {
+            return new ArrayList<>();
         }
-        roots.forEach(r -> {
-            setRouteChildren(r, nodes);
-        });
+        // 使用HashMap存储节点，以提高查找效率
+        Map<Integer, List<MenuRouteVo>> voMap = nodes.stream().map(node->menuToRoute(node))
+                .collect(Collectors.groupingBy(MenuRouteVo::getParentId));
+        //根节点
+        List<MenuRouteVo> roots = voMap.getOrDefault(rootId, new ArrayList<>());
+        //设置子节点
+        roots.forEach(node->setRouteChildren(node, voMap));
         return roots;
     }
 
-    public void setRouteChildren(MenuRouteVo parent, List<SysMenu> nodes) {
-        List<MenuRouteVo> children = new ArrayList<>();
-        for (Iterator<SysMenu> ite = nodes.iterator(); ite.hasNext(); ) {
-            SysMenu node = ite.next();
-            if (Objects.equals(node.getParentId(), parent.getId())) {
-                MenuRouteVo dataVo = menuToRoute(node);
-                children.add(dataVo);
-                // 从所有节点列表中删除该节点，以免后续重复遍历该节点
-                ite.remove();
-            }
-        }
+    private void setRouteChildren(MenuRouteVo parent, Map<Integer, List<MenuRouteVo>> voMap) {
+        //子节点
+        List<MenuRouteVo> children = voMap.getOrDefault(parent.getId(), new ArrayList<>());
         parent.setChildren(children);
-        children.forEach(m -> {
-            // 递归设置子节点
-            setRouteChildren(m, nodes);
-        });
+        children.forEach(m -> setRouteChildren(m, voMap));
     }
 
     public SysMenuVo menuToVo(SysMenu sysMenu) {
@@ -215,6 +194,7 @@ public class SysMenuService extends ServiceImpl<SysMenuMapper, SysMenu> {
     public MenuRouteVo menuToRoute(SysMenu sysMenu) {
         MenuRouteVo routeVo = new MenuRouteVo();
         routeVo.setId(sysMenu.getId());
+        routeVo.setParentId(sysMenu.getParentId());
         routeVo.setName(sysMenu.getRoute());
         routeVo.setPath(sysMenu.getRoute());
         routeVo.setComponent(sysMenu.getUrl());

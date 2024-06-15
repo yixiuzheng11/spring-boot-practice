@@ -16,6 +16,9 @@ public class MenuRouteVo {
     @Schema(description = "菜单id")
     private Integer id;
 
+    @Schema(description = "父Id")
+    private Integer parentId;
+
     @Schema(description = "路由名称")
     private String name;
 
