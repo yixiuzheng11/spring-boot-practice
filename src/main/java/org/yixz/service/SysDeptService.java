@@ -1,30 +1,18 @@
 package org.yixz.service;
 
-import com.alibaba.druid.wall.WallProvider;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.google.common.collect.Lists;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
-import org.yixz.common.enums.MenuTypeEnum;
-import org.yixz.common.util.UserUtil;
 import org.yixz.entity.dto.SysDeptDto;
 import org.yixz.entity.mysql.SysDept;
-import org.yixz.entity.mysql.SysUser;
-import org.yixz.entity.vo.MenuRouteVo;
-import org.yixz.entity.vo.RouteVo;
 import org.yixz.entity.vo.SysDeptVo;
 import org.yixz.mapper.SysDeptMapper;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 /**
  * <p>
