@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
  * @since 2021-12-22
  */
 @Service
-public class UserRoleService extends ServiceImpl<SysUserRoleMapper, SysUserRole> {
+public class SysUserRoleService extends ServiceImpl<SysUserRoleMapper, SysUserRole> {
     public Page<SysUserRole> getPage(SysUserRoleDto dto) {
         Page page = new Page(dto.getPageNum(), dto.getPageSize());
         QueryWrapper<SysUserRole> queryWrapper = new QueryWrapper();

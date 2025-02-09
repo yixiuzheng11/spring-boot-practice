@@ -8,7 +8,7 @@ package org.yixz.common.constant;
  */
 public class SysConstant {
     //生成token时的salt
-    public static String TOKEN_SALT = "spring-cloud-practice";
+    public static String TOKEN_SALT = "spring-boot-practice";
 
     //记住我时生成cookie的salt
     public static String REMEMBER_ME_SALT = "yixiuzheng";
@@ -21,4 +21,11 @@ public class SysConstant {
 
     //用户权限信息在redis中的key前缀
     public static final String USER_PERMS_KEY_PREFIX = "USER_PERMS_";
+
+    public static final String SUPER_ADMIN_CODE = "admin";
+
+    /**
+     * 超管角色id
+     */
+    public static final Integer SUPER_ADMIN_id = 1;
 }

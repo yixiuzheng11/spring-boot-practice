@@ -7,9 +7,12 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.yixz.common.constant.SysConstant;
 import org.yixz.entity.dto.SysUserDto;
 import org.yixz.entity.mysql.SysUser;
+import org.yixz.entity.mysql.SysUserRole;
 import org.yixz.mapper.SysUserMapper;
 
 /**
@@ -22,6 +25,9 @@ import org.yixz.mapper.SysUserMapper;
  */
 @Service
 public class SysUserService extends ServiceImpl<SysUserMapper, SysUser>{
+    @Autowired
+    private SysUserRoleService sysUserRoleService;
+
     public Page<SysUser> getPage(SysUserDto dto) {
         Page page = new Page(dto.getPageNum(), dto.getPageSize());
         QueryWrapper<SysUser> queryWrapper = new QueryWrapper();
@@ -53,5 +59,19 @@ public class SysUserService extends ServiceImpl<SysUserMapper, SysUser>{
 
     public SysUser getByUserName(String userName) {
         return this.getOne(Wrappers.lambdaQuery(SysUser.class).eq(SysUser::getUserName, userName).last("limit 1"));
+    }
+
+    /**
+     * 判断是否是超管
+     * @param sysUser
+     * @return
+     */
+    public boolean isAdmin(SysUser sysUser) {
+        SysUserRole sysUserRole = sysUserRoleService.getOne(Wrappers.lambdaQuery(SysUserRole.class)
+                .eq(SysUserRole::getUserId, sysUser.getId())
+                .eq(SysUserRole::getRoleId, SysConstant.SUPER_ADMIN_id)
+                .last(" limit 1")
+        );
+        return sysUserRole != null;
     }
 }

@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.Lists;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.yixz.common.enums.MenuTypeEnum;
 import org.yixz.common.util.UserUtil;
 import org.yixz.entity.dto.SysMenuDto;
@@ -32,6 +33,8 @@ import java.util.stream.Collectors;
 @Service
 public class SysMenuService extends ServiceImpl<SysMenuMapper, SysMenu> {
 
+    @Autowired
+    private SysUserService sysUserService;
     //根节点id
     private static Integer rootId = 0;
 
@@ -81,16 +84,13 @@ public class SysMenuService extends ServiceImpl<SysMenuMapper, SysMenu> {
 
     public List<SysMenu> getAuthMenus(SysMenuDto dto) {
         SysUser sysUser = UserUtil.getCurrentUser();
-        if(sysUser==null) {
-            return new ArrayList<>();
-        }
         dto.setUserId(sysUser.getId());
         List<SysMenu> menuList = null;
+        //判断是否是超管
+        boolean adminFlag = sysUserService.isAdmin(sysUser);
         //超管查全部
-        if(sysUser.getId().equals(1)){
-            menuList = baseMapper.selectList(Wrappers.lambdaQuery(SysMenu.class)
-                    .in(SysMenu::getType, Lists.newArrayList(MenuTypeEnum.MENU.getCode(), MenuTypeEnum.CATALOG.getCode()))
-            );
+        if(adminFlag){
+            menuList = baseMapper.selectList(Wrappers.lambdaQuery(SysMenu.class));
         }else {
             menuList = baseMapper.getAuthMenus(dto);
         }
@@ -133,9 +133,6 @@ public class SysMenuService extends ServiceImpl<SysMenuMapper, SysMenu> {
 
     public RouteVo getMenuRoute() {
         SysUser sysUser = UserUtil.getCurrentUser();
-        if(sysUser==null) {
-            return new RouteVo();
-        }
         SysMenuDto dto = new SysMenuDto();
         dto.setUserId(sysUser.getId());
         List<SysMenu> menuList = this.getAuthMenus(dto);

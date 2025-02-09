@@ -16,7 +16,7 @@ import javax.annotation.Resource;
  * @author yixiuzheng11
  * @date 2021年11月25日 19:05
  */
-@Tag(name = "系统管理")
+@Tag(name = "登录用户信息")
 @RestController
 @RequestMapping("/sys")
 @Slf4j

@@ -2,6 +2,10 @@ package org.yixz.common.handler;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import org.apache.ibatis.reflection.MetaObject;
+import org.yixz.common.util.UserUtil;
+import org.yixz.entity.mysql.SysUser;
+import org.yixz.service.SysUserRoleService;
+
 import java.time.LocalDateTime;
 
 /**
@@ -13,15 +17,17 @@ import java.time.LocalDateTime;
 public class MybatisObjectHandler implements MetaObjectHandler {
     @Override
     public void insertFill(MetaObject metaObject) {
-        setFieldValByName("createdBy", "admin", metaObject);
-        setFieldValByName("updatedBy", "admin", metaObject);
-        setFieldValByName("createdDate", LocalDateTime.now(), metaObject);
-        setFieldValByName("updatedDate",LocalDateTime.now(),metaObject);
+        SysUser sysUser = UserUtil.getCurrentUser();
+        setFieldValByName("createdBy", sysUser.getId(), metaObject);
+        setFieldValByName("updatedBy", sysUser.getId(), metaObject);
+        //setFieldValByName("createdDate", LocalDateTime.now(), metaObject);
+        //setFieldValByName("updatedDate",LocalDateTime.now(),metaObject);
     }
 
     @Override
     public void updateFill(MetaObject metaObject) {
-        setFieldValByName("updatedBy", "admin", metaObject);
-        setFieldValByName("updatedDate",LocalDateTime.now(),metaObject);
+        SysUser sysUser = UserUtil.getCurrentUser();
+        setFieldValByName("updatedBy", sysUser.getId(), metaObject);
+        //setFieldValByName("updatedDate",LocalDateTime.now(),metaObject);
     }
 }

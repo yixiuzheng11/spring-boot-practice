@@ -2,9 +2,12 @@ package org.yixz.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.yixz.entity.dto.SysRoleDto;
 import org.yixz.entity.mysql.SysRole;
+import org.yixz.entity.vo.SysRoleVo;
 import org.yixz.mapper.SysRoleMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.commons.lang3.StringUtils;
@@ -21,12 +24,16 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class SysRoleService extends ServiceImpl<SysRoleMapper, SysRole> {
-    public Page<SysRole> getPage(SysRoleDto dto) {
+    public IPage<SysRoleVo> getPage(SysRoleDto dto) {
         Page page = new Page(dto.getPageNum(), dto.getPageSize());
-        QueryWrapper<SysRole> queryWrapper = new QueryWrapper();
-        queryWrapper.eq(StringUtils.isNotEmpty(dto.getRoleCode()), "role_code", dto.getRoleCode());
-        queryWrapper.eq(StringUtils.isNotEmpty(dto.getRoleName()), "role_name", dto.getRoleName());
-        return baseMapper.selectPage(page, queryWrapper);
+        Page<SysRole> result = baseMapper.selectPage(page, Wrappers.lambdaQuery(SysRole.class)
+                .like(StringUtils.isNotEmpty(dto.getRoleName()), SysRole::getRoleName, dto.getRoleName())
+                .eq(StringUtils.isNotEmpty(dto.getRoleCode()), SysRole::getRoleCode, dto.getRoleCode()));
+        return result.convert(item->{
+            SysRoleVo sysRoleVo = new SysRoleVo();
+            BeanUtils.copyProperties(item, sysRoleVo);
+            return sysRoleVo;
+        });
     }
 
     public Integer add(SysRoleDto dto) {

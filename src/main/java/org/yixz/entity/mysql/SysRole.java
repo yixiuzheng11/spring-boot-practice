@@ -30,6 +30,12 @@ public class SysRole {
     private Integer id;
 
     /**
+     * 角色编码
+     */
+    private String roleCode;
+
+
+    /**
      * 角色名称
      */
     private String roleName;
@@ -37,7 +43,7 @@ public class SysRole {
     /**
      * 状态，1-有效，0-无效
      */
-    private Integer dataStatus;
+    private Integer status;
 
     /**
      * 创建时间
