@@ -1,6 +1,6 @@
 package org.yixz.common.advice;
 
-import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson2.JSON;
 import org.yixz.common.annotation.IgnoreRestBody;
 import org.yixz.common.response.ResponseCode;
 import org.yixz.common.response.ResponseResult;
@@ -41,11 +41,7 @@ public class GlobalResBodyAdvice implements ResponseBodyAdvice<Object> {
             return body;
         }
         if(body instanceof String) {
-            Map<String, Object> map = new HashMap<>();
-            map.put("code", ResponseCode.SUCCESS.code);
-            map.put("msg", ResponseCode.SUCCESS.msg);
-            map.put("data", body);
-            return JSON.toJSONString(map);
+            return JSON.toJSONString(ResponseResult.success(body));
         }
         return ResponseResult.success(body);
     }

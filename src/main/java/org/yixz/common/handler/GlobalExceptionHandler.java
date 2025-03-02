@@ -1,6 +1,5 @@
 package org.yixz.common.handler;
 
-import cn.dev33.satoken.exception.NotLoginException;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.yixz.common.exception.BizException;
@@ -29,17 +28,6 @@ public class GlobalExceptionHandler {
     public ResponseResult bizExceptionHandler(Exception e){
         log.error("业务异常", e);
         return ResponseResult.error(ResponseCode.BUSINESS_ERROR.code, e.getMessage());
-    }
-
-    /**
-     * 未登录的异常
-     * @param e
-     * @return
-     */
-    @ExceptionHandler(value = NotLoginException.class)
-    public ResponseResult notLoginExceptionHandler(Exception e){
-        log.error("请求未认证", e);
-        return ResponseResult.error(ResponseCode.UNAUTHORIZED.code, ResponseCode.UNAUTHORIZED.msg);
     }
 
     /**

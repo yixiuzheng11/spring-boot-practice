@@ -1,14 +1,11 @@
 package org.yixz.service;
 
-import cn.dev33.satoken.stp.StpUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import org.yixz.common.enums.MenuTypeEnum;
 import org.yixz.entity.dto.SysMenuDto;
 import org.yixz.entity.mysql.SysMenu;
-import org.yixz.entity.vo.NavVo;
 import org.yixz.entity.vo.SysMenuVo;
 import org.yixz.mapper.SysMenuMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -19,7 +16,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -61,28 +57,6 @@ public class SysMenuService extends ServiceImpl<SysMenuMapper, SysMenu> {
 
     public void delete(Integer id) {
         baseMapper.deleteById(id);
-    }
-
-    /**
-     * 获取导航菜单
-     * @return
-     */
-    public NavVo getNav() {
-        Integer userId = Integer.parseInt(StpUtil.getLoginId().toString());
-        if(userId==null) {
-            return new NavVo();
-        }
-        List<SysMenuVo> menuVoList = baseMapper.getAuthMenu(userId);
-        //目录菜单
-        List<SysMenuVo> menuList = menuVoList.stream().filter(item->!MenuTypeEnum.BTN_TYPE.equals(item.getMenuType())).collect(Collectors.toList());
-        //按钮
-        List<String> btnList = menuVoList.stream().filter(item->MenuTypeEnum.BTN_TYPE.equals(item.getMenuType())).map(item->item.getPerm()).collect(Collectors.toList());
-        //生成树形结构
-        //List<SysMenuVo> treeList = generateTrees(menuList);
-        NavVo navVo = new NavVo();
-        navVo.setMenuList(menuList);
-        navVo.setPermList(btnList);
-        return navVo;
     }
 
     /**
